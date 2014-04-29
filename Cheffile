@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+#^syntax detection
+
+site 'http://community.opscode.com/api/v1'
+
+cookbook 'apt'
+
+cookbook 'build-essential', '< 2.0.0'
+
+cookbook 'nodejs'
+
+cookbook 'rvm', 
+ :git => 'git://github.com/fnichol/chef-rvm.git'
+
+cookbook 'git', 
+  :git => 'https://github.com/fnichol/chef-git.git'
+
+cookbook 'mysql', '< 4.0'
