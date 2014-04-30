@@ -2,3 +2,10 @@
 <h1>Adam's Updated Portfolio Site</h1>
 <p>I'm still building the backend so there aren't any graphics yet.</p>
 
+<% $projects.each do |project| %>
+		<%= project.agency.to_s %>
+		<%= project.client.to_s %>
+		<%= project.description.to_s %>
+		<%= project.link.to_s %>
+		<%= project.img.to_s %>
+<% end %>
