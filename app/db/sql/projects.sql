@@ -1,2 +1,2 @@
 DELETE FROM projects;
-INSERT INTO 'projects' VALUES('none','Adam Riggs','This is one of the very first things that I did with Flash.','http://adamriggs.com/asteroids/','http://adamriggs.com/assets/jpg/Asteroids.jpg');
+INSERT INTO projects (agency,client,description,link,img) VALUES('none','Adam Riggs','This is one of the very first things that I did with Flash.','http://adamriggs.com/asteroids/','http://adamriggs.com/assets/jpg/Asteroids.jpg');
