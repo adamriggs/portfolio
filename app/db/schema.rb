@@ -12,15 +12,15 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20140429165652) do
-	
-	create_table "portfolio", :force => true do |t|
-		t.string   "agency"
-		t.string   "client"
-		t.string   "description"
-		t.string   "link"
-		t.string   "img"
-		t.datetime "created_at",       :null => false
-		t.datetime "updated_at",       :null => false
-	end
-	
+
+  create_table "projects", force: true do |t|
+    t.string   "agency"
+    t.string   "client"
+    t.string   "description"
+    t.string   "link"
+    t.string   "img"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
 end

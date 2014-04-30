@@ -1,18 +1,24 @@
 development:
-  adapter: mysql
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
   database: library_development
   username: root
   password: mu113n
   host: localhost
 test:
-  adapter: mysql
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
   database: library_test
   username: root
   password: mu113n
   host: localhost
 production:
-  adapter: mysql
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
   database: library_production
   username: root
   password: mu113n
-  host: localhost
+  host: onosen.com
