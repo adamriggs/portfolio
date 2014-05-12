@@ -14,11 +14,13 @@
 ActiveRecord::Schema.define(version: 20140429165652) do
 
   create_table "projects", force: true do |t|
+    t.string   "title"
     t.string   "agency"
     t.string   "client"
-    t.string   "description"
-    t.string   "link"
+    t.string   "thumb"
     t.string   "img"
+    t.string   "link"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

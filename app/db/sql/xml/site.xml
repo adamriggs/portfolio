@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SITE>			
+			<CAROUSEL>
+								<ITEM>
+											<TITLE>Celebrity Asteroids</TITLE>
+											<AGENCY><![CDATA[none]]></AGENCY>
+											<CLIENT><![CDATA[Adam Riggs]]></CLIENT>
+											<THUMB>Asteroids.jpg</THUMB>
+											<IMG>Asteroids_strip.png</IMG>
+											<LINK><![CDATA[http://adamriggs.com/asteroids/]]></LINK>
+											<DESCRIPTION><![CDATA[This is one of the very first things that I did with Flash.  Back in 2002 I wanted to try out the new ActionScript 1.0 in Flash 5 and making a video game seemed fun.  I thought I would copy Asteroids but I wanted to make it a little more interesting.  So, instead of rocks, you shoot at the disembodied heads of various celebrities.  I learned how to maintain a constant speed for the spaceship no matter what direction it was going in, collision detection, and many other things.]]></DESCRIPTION>
+								</ITEM>
+								
+								<ITEM>
+											<TITLE>Lexus Build Your Car Prototype</TITLE>
+											<AGENCY><![CDATA[Level Studios]]></AGENCY>
+											<CLIENT><![CDATA[Lexus]]></CLIENT>
+											<THUMB>Lexus.jpg</THUMB>
+											<IMG>Lexus_strip.png</IMG>
+											<LINK><![CDATA[http://adamriggs.com/clients/Lexus/]]></LINK>
+											<DESCRIPTION><![CDATA[This was the first thing that I did in Flash professionally.  I wanted to get into ActionScript programming and my friend, Dave Cole, needed a hand with this.  It is a prototype of the "build your car" functionality on the Lexus website.  This was just a prototype so they didn't need it to be fully functional.  All that they needed was to have a few of the cars buildable so that they could do some test marketing on it.  We had to produce two different versions using different graphics.]]></DESCRIPTION>
+								</ITEM>
+								
+								<ITEM>
+											<TITLE>Tesla Motors Carousel</TITLE>
+											<AGENCY><![CDATA[Level Studios]]></AGENCY>
+											<CLIENT><![CDATA[Tesla Motors]]></CLIENT>
+											<THUMB>Teslamotors.jpg</THUMB>
+											<IMG>tesla_strip.png</IMG>
+											<LINK><![CDATA[]]></LINK>
+											<DESCRIPTION><![CDATA[Tesla was set to announce their new, lower-priced, sedan and they needed a carousel to show off their larger product line.  It's a fairly straight forward carousel with a side bar that gives some bullet points about each model as you scroll through them.  The interesting thing about this project was that they, obviously, didn't want to release the pictures of their new sedan until the day it was announced.  So, the night before launch, there were a lot of last minute changes due to the fact that the pictures they wanted to use on the live site were slightly different sizes compared to the pictures that they had me use during development.  It came together at the end and everything looked beautiful.]]></DESCRIPTION>
+								</ITEM>
+								
+								<ITEM>
+											<TITLE>EA - Army of Two</TITLE>
+											<AGENCY><![CDATA[Mekanism]]></AGENCY>
+											<CLIENT><![CDATA[Electronic Arts]]></CLIENT>
+											<THUMB>EA_AO2.jpg</THUMB>
+											<IMG>EA_AO2_strip.png</IMG>
+											<LINK><![CDATA[http://www.armyoftwo.com/home.action]]></LINK>
+											<DESCRIPTION><![CDATA[EA was coming out with the new version of their game, Army of Two.  My friend, Dave Cole, was creating the site for Mekanism and he needed a hand with something.  The way the site works is that you watch a short video of game action and then you get a choice of which video to watch next.  ItÃ¢â‚¬â„¢s kind of like a choose your own adventure story.  When presenting the user with the choice, two buttons come up that have the names of the choices and a few animated effects.  I made those buttons. ]]></DESCRIPTION>
+								</ITEM>
+								
+								<ITEM>
+											<TITLE>Parksabers Video Player</TITLE>
+											<AGENCY><![CDATA[Rentacoder]]></AGENCY>
+											<CLIENT><![CDATA[Parksabers]]></CLIENT>
+											<THUMB>Parksabers.jpg</THUMB>
+											<IMG>Parksabers_strip.png</IMG>
+											<LINK><![CDATA[http://parksabers.com/]]></LINK>
+											<DESCRIPTION><![CDATA[Parksabers makes lightsabers that you can fight with.  To demonstrate this feature, they have a video of three people fighting with them in a warehouse.  The video is a 9 meg 640x320 quicktime file that they needed converted into a 133x75 button.  The button needed to play the video while being a link to the larger version of the video.  There were also file size constraints that they wanted to keep within.  After some experimenting, I edited down the video to have only the best 27 seconds of video looping constantly.  The project didn't take too long but it was really fun to work for a company that makes lightsabers.]]></DESCRIPTION>
+								</ITEM>
+								
+								<ITEM>
+											<TITLE>Xerophytic Design Website</TITLE>
+											<AGENCY><![CDATA[none]]></AGENCY>
+											<CLIENT><![CDATA[Xerophytic Design]]></CLIENT>
+											<THUMB>xero.jpg</THUMB>
+											<IMG>xero_strip.png</IMG>
+											<LINK><![CDATA[http://xero.pro/]]></LINK>
+											<DESCRIPTION><![CDATA[Xerophytic Design is a landscaping company in Pheonix, AZ.  They had an existing Flash-based website but it didn't have a lot of polish to it.  I conviced them to let me spruce it up.  I upgraded the design they already had to be bigger, bolder, and more animated.  I wanted them to be able to add pages and alter the layout themselves if they wanted to so I included some basic formatting rules in the back end of the thing that let them edit things like text, lists, the navigation buttons, and more using an xml document.  They have been happily making changes to their site without my intervention since launch.]]></DESCRIPTION>
+								</ITEM>
+								
+								<ITEM>
+											<TITLE>Experiment: Visualizing Sound</TITLE>
+											<AGENCY><![CDATA[none]]></AGENCY>
+											<CLIENT><![CDATA[Adam Riggs]]></CLIENT>
+											<THUMB>visuals.jpg</THUMB>
+											<IMG>visuals_strip.png</IMG>
+											<LINK><![CDATA[http://adamriggs.com/experiments/visuals/]]></LINK>
+											<DESCRIPTION><![CDATA[I had always been interested in sound visualization.  So I cooked up this little experiment to teach myself about it.  What's going on is the software takes a sample of the music that is playing at the moment.  The sample is made up of 256 numbers.  The software goes through the list of numbers in groups of three.  The first is the diameter of the circle, the second is the color for the border, and the third is the color for the inside.  It draws all of these circles on top of each other then blurs the whole thing and shifts it to the right.  It does this 30 times per second. <br><br>I wrote the mp3 controls specifically for this experiment.  The song is "Set Back" by Fluke.]]></DESCRIPTION>
+								</ITEM>
+								
+								<ITEM>
+											<TITLE>Axe Dirty Morning Test</TITLE>
+											<AGENCY><![CDATA[Mekanism]]></AGENCY>
+											<CLIENT><![CDATA[Axe]]></CLIENT>
+											<THUMB>axe.jpg</THUMB>
+											<IMG>axe_strip.png</IMG>
+											<LINK><![CDATA[http://dirtymorningtest.com/]]></LINK>
+											<DESCRIPTION><![CDATA[This was a really fun but challenging project.  There's two parts to this one:  The first is being interviewed by a hot set of twins.  The second is viewing your results.  I had to manage recording and playing back webcam video using Flash Media Server as well as playing back pre-recorded video using the progressive download method.  Making sure that my code worked with just about every type of webcam, browser, and operating system took a lot of testing so I set up a separate webpage so that a crowd of testers could view the page and email me the diagnostic output.  In the second, results, part the issue of playing back the webcam video at the precise instant that it was needed took another round of experimenting.  With the help of my crowd of testers and advisors I got it all down.  <br><br>Take five minutes and try it out.  It's super-fun.  It's like a modern form of mad-libs.  And don't worry, the video you record is yours to share or not, a company like Axe isn't going to invite lawsuits by doing anything with your recordings.]]></DESCRIPTION>
+								</ITEM>
+								
+								<ITEM>
+											<TITLE>Microsoft Kin Video Players</TITLE>
+											<AGENCY><![CDATA[Mekanism]]></AGENCY>
+											<CLIENT><![CDATA[Microsoft]]></CLIENT>
+											<THUMB>kin.jpg</THUMB>
+											<IMG>kin_strip.png</IMG>
+											<LINK><![CDATA[http://adamriggs.com/tmp/myspace_player/]]></LINK>
+											<DESCRIPTION><![CDATA[Unfortunately, the Microsoft Kin phone no longer exists so I only have a link to my video player, not the whole site.  My job was to write a couple of custom video players for the YouTube and Myspace pages for the product launch.  There was a scroll bar below the video window for selecting which video to watch.  There was also an interface for posting a video to your facebook wall or tweeting the video via your twitter account.  All the standard video player controls applied and there was also a ton of statistical things to report to various agencies about how the user interacted with the player.<br><br>Both the YouTube and Myspace players were essentially the same thing except the YouTube one pulled the video from YouTube and the Myspace one used progressive download video playback.  They were also different sizes.  What I did was to write one video player and have it resize and swap where it gets the video depending on whether it was used in YouTube or Myspace. ]]></DESCRIPTION>
+								</ITEM>
+								
+								<ITEM>
+											<TITLE>Google Mobile YouTube Channel</TITLE>
+											<AGENCY><![CDATA[Teak Motion Visuals]]></AGENCY>
+											<CLIENT><![CDATA[Google]]></CLIENT>
+											<THUMB>google_mobile.jpg</THUMB>
+											<IMG>google_mobile_strip.png</IMG>
+											<LINK><![CDATA[http://www.youtube.com/googlemobile]]></LINK>
+											<DESCRIPTION><![CDATA[The main interface for this is a 3D "cube" that has parts that rotate in a way that evokes the idea of a Rubik's cube.  I wrote the cube and there was another guy who wrote the interfaces that were applied to the sides of the cube.  The cube went through many iterations before ending up where it is.  At one time, it was wildly complicated with 127 different blocks making up the cube.  Each time a rotation happened every individual block had to be re-mapped to it's region in the cube.  We eventually settled on a solution that was much more simple.<br><br>There are multiple cubes that occupy the same space.  Each one does only one type of rotation.  I just swap which one is visible depending on how the cube is supposed to move.  Since the cubes occupy the exact same space, the instant swap from one cube to another is invisible to the user.]]></DESCRIPTION>
+								</ITEM>
+								
+								<ITEM>
+											<TITLE>Forum Kiosk</TITLE>
+											<AGENCY><![CDATA[Pennebaker]]></AGENCY>
+											<CLIENT><![CDATA[Forum Energy Technologies]]></CLIENT>
+											<THUMB>Forum.jpg</THUMB>
+											<IMG>Forum_strip.png</IMG>
+											<LINK><![CDATA[http://adamriggs.com/clients/pennebaker/forum/]]></LINK>
+											<DESCRIPTION><![CDATA[Forum Energy Technologies makes oilfield technologies like drilling equipment and undersea ROV's.  This is a kiosk that showcases this new companies products.  They wanted it done in JavaScript so that they could use iPad's to display the kiosk software.  It automatically cycles through all the products and categories unless the user interacts with it, then it pauses.  After a period of inactivity it starts back up again.]]></DESCRIPTION>
+								</ITEM>
+								
+								<ITEM>
+											<TITLE>GE Kiosk</TITLE>
+											<AGENCY><![CDATA[Pennebaker]]></AGENCY>
+											<CLIENT><![CDATA[GE]]></CLIENT>
+											<THUMB>GE.jpg</THUMB>
+											<IMG>GE_strip.png</IMG>
+											<LINK><![CDATA[http://adamriggs.com/clients/pennebaker/ge/]]></LINK>
+											<DESCRIPTION><![CDATA[This is for the GE Triple-S product, which is a long-term service agreement for oil and gas exploration and production.  I got pulled into this project with about a week until the deadline since the guy that was working on it was becoming unreliable.  I changed all the motion graphics animations to math based ActionScript tweening.  As you go through the interface you can select products that you want to know more about.  After you are done, you can email your selected products to yourself from the interface.  I also wrote all the PHP code that does multi-part HTML emails with attachments.]]></DESCRIPTION>
+								</ITEM>
+								
+								<ITEM>
+											<TITLE>Real California Milk</TITLE>
+											<AGENCY><![CDATA[Fortified Studios]]></AGENCY>
+											<CLIENT><![CDATA[California Milk Advisory Board]]></CLIENT>
+											<THUMB>CMAB.jpg</THUMB>
+											<IMG>CMAB_strip.png</IMG>
+											<LINK><![CDATA[http://partofyourfamily.realcaliforniamilk.com/]]></LINK>
+											<DESCRIPTION><![CDATA[Real California Milk, the people with the talking cows, wanted a site where they could engage with their customers.  The site integrates with Facebook and Twitter.  I worked with two other Flash guys and few other guys that wrote the backend api.  My responsibility was for the recipe contest section where people can upload recipes and vote on them.  There were a lot of technical challenges including dynamically generating thumbnails, blurring images, creating reflections, deep linking, and api calls.  The carousel of contests is dynamically generated with database data.  The user, after entering a recipe, can upload an image that they can manipulate through zooming and repositioning to create their thumbnails.  They can search and sort through the recipes.  This was a big project with a tight deadline.]]></DESCRIPTION>
+								</ITEM>
+			
+			</CAROUSEL>
+
+</SITE>

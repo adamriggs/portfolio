@@ -1,11 +1,22 @@
 
-<h1>Adam's Updated Portfolio Site</h1>
-<p>I'm still building the backend so there aren't any graphics yet.</p>
+
+
+<div id="image_box">
 
 <% $projects.each do |project| %>
-		<%= project.agency.to_s %>
-		<%= project.client.to_s %>
-		<%= project.description.to_s %>
-		<%= project.link.to_s %>
-		<%= project.img.to_s %>
+	
+	<div class="col">
+	
+		<div class="project-tile">
+			<img src="<%= project.thumb.to_s %>"><br>
+			Agency: <%= project.agency.to_s %><br>
+			Client: <%= project.client.to_s %><br>
+			Description: <%= project.description.to_s %><br>
+			<a><%= project.link.to_s %></a>
+		</div>
+	
+	</div>
+	
 <% end %>
+
+</div>
