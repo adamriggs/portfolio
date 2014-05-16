@@ -22,8 +22,8 @@ var planeGeo=[], planeMat=[], planeMesh=[];
 var backgroundPlane;
 
 //parameters
-var backgroundPlaneW = 500;
-var backgroundPlaneH = 500;
+var backgroundPlaneW = 750;
+var backgroundPlaneH = 750;
 
 
 
@@ -80,16 +80,20 @@ function init() {
 
 function initScene() {
 	initBackground();
+	initName();
 	
 }
 
 function initBackground(){
-
+	var backgroundPlaneTexture = THREE.ImageUtils.loadTexture("backgroundPlane.jpg");
 	backgroundPlane = new THREE.Mesh(new THREE.PlaneGeometry(backgroundPlaneW, backgroundPlaneH), new THREE.MeshBasicMaterial({
-		wireframe: true,
-		color: 'blue'
+		map: backgroundPlaneTexture
 	}));
 	scene.add(backgroundPlane);
+}
+
+function initName(){
+	
 }
 
 function initLight() {
