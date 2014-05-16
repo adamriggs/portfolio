@@ -20,10 +20,14 @@ var animationComplete = true;
 var texture, material, mesh;
 var planeGeo=[], planeMat=[], planeMesh=[];
 var backgroundPlane;
+var namePlane;
 
 //parameters
 var backgroundPlaneW = 750;
 var backgroundPlaneH = 750;
+
+var namePlaneW = 200;
+var namePlaneH = 40;
 
 
 
@@ -93,7 +97,15 @@ function initBackground(){
 }
 
 function initName(){
-	
+	var namePlaneTexture = THREE.ImageUtils.loadTexture("name-white.png");
+	namePlane = new THREE.Mesh(new THREE.PlaneGeometry(namePlaneW, namePlaneH), new THREE.MeshBasicMaterial({
+		map: namePlaneTexture,
+		transparent: true
+	}));
+	scene.add(namePlane);
+	namePlane.position.z = 100;
+	namePlane.position.x = -200;
+	namePlane.position.y = 200;
 }
 
 function initLight() {
