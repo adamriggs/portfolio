@@ -1,7 +1,7 @@
 //basics
 var camera, scene, renderer;
 var container;
-var cameraDistance = 100;
+var cameraDistance = 1000;
 var cameraSpeed = .01;
 var cameraHorzAngle = Math.PI / 2;
 var cameraVertAngle = Math.PI / 2;
@@ -16,6 +16,14 @@ var mouseX, mouseY;
 var animating = false;
 var animationComplete = true;
 
+//specifics
+var texture, material, mesh;
+var planeGeo=[], planeMat=[], planeMesh=[];
+var backgroundPlane;
+
+//parameters
+var backgroundPlaneW = 500;
+var backgroundPlaneH = 500;
 
 
 
@@ -35,11 +43,13 @@ $(window).mouseleave(function(e) {
 $(window).click(function(e) {
 	//if (cameraMove) cameraMove = false;
 	//else cameraMove = true;
+/*
 	if(animationComplete){
 		animating = true;
 		animationComplete = false;
 		velocity = .01;
 	}
+*/
 })
 
 
@@ -69,27 +79,28 @@ function init() {
 }
 
 function initScene() {
+	initBackground();
 	
-/*
-	var loader = new THREE.JSONLoader();
-	loader.load("obj/minion/minion.js", buildModel);
-	
-	var handLoader = new THREE.JSONLoader();
-	handLoader.load("obj/hand.js", buildHand);
-*/
-	
-/*
-	var geo = new THREE.SphereGeometry(2);
-	var mat = new THREE.MeshBasicMaterial({color: 0xa4a4a4, wireframe: true});
-	fingertip = new THREE.Mesh(geo,mat);
-	scene.add(fingertip);
-	fingertip.position.x =50;
-*/
+}
 
+function initBackground(){
+
+	backgroundPlane = new THREE.Mesh(new THREE.PlaneGeometry(backgroundPlaneW, backgroundPlaneH), new THREE.MeshBasicMaterial({
+		wireframe: true,
+		color: 'blue'
+	}));
+	scene.add(backgroundPlane);
 }
 
 function initLight() {
+	
+}
 
+function moveCamera(){
+	camera.position.x = ($(window).width())/2 - mouseX;
+	camera.position.y = ($(window).height())/2 - mouseY;
+	
+	camera.lookAt(scene.position);
 }
 
 function animate() {
@@ -98,36 +109,7 @@ function animate() {
 	// 	cameraRotate(mouseX, mouseY);
 	// }
 	
-	
-/*
-	if(animating && modelCollapsed == false){
-		collapseModel(velocity);
-		velocity *= acceleration;
-		particleSystem.geometry.verticesNeedUpdate = true;
-	}
-	
-	if(animating && modelCollapsed){
-		raiseModel(velocity);
-		velocity *= acceleration;
-		particleSystem.geometry.verticesNeedUpdate = true;
-	}
-	
-	frame = leap.frame();
-	
-	if(frame && frame.fingers && frame.fingers.length>0){
-		
-		fingertip.position.x = frame.fingers[0].tipPosition[0];
-		fingertip.position.y = frame.fingers[0].tipPosition[1]/200;
-		fingertip.position.z = frame.fingers[0].tipPosition[2];
-	
-		//debug(fingertip.position.x +", " +fingertip.position.y +", " + fingertip.position.z);
-		//debug(frame.fingers[0].tipPosition.x +", " + frame.fingers[0].tipPosition.y +", " + frame.fingers[0].tipPosition.z);
-		//debug(frame.fingers[0].tipPosition);
-		
-	}
-	
-	checkCollision();
-*/
+	moveCamera();
 	
 	requestAnimationFrame(animate);
 	render();
@@ -139,6 +121,7 @@ function render() {
 	renderer.render(scene, camera);
 }
 
+/*
 //this makes calls the animation loop
 (function() {
 
@@ -174,3 +157,4 @@ function render() {
 	};
 
 }());
+*/
