@@ -16,12 +16,9 @@ var mouseX, mouseY;
 var animating = false;
 var animationComplete = true;
 
-//specifics
-/*
-var texture, material, mesh;
-var planeGeo=[], planeMat=[], planeMesh=[];
-*/
+var mouseOver = true;
 
+//specifics
 var backgroundPlane;
 var namePlane;
 var shadowPlane;
@@ -41,15 +38,25 @@ var shadowPlaneH;
 $(window).mousemove(function(e) {
 	mouseX = e.pageX;
 	mouseY = e.pageY;
-})
+	
+	//mouseOver = true;
+});
 
 $(window).mouseenter(function(e) {
-	//cameraMove = true;
-})
+	//mouseOver = true;
+});
 
 $(window).mouseleave(function(e) {
-	//cameraMove = false;
-})
+	//mouseOver = false;
+});
+
+$(window).mouseOver(function(e) {
+	mouseOver = true;
+});
+
+$(window).mouseOut(function(e) {
+	mouseOver = false;
+});
 
 $(window).click(function(e) {
 	//if (cameraMove) cameraMove = false;
@@ -61,7 +68,7 @@ $(window).click(function(e) {
 		velocity = .01;
 	}
 */
-})
+});
 
 
 function init() {
@@ -130,8 +137,8 @@ function initName(){
 	
 	//shadow
 	//proportion is 634/153
-	shadowPlaneW = 400;
-	shadowPlaneH = 90;
+	shadowPlaneW = 500;
+	shadowPlaneH = 121;
 	
 	var shadowPlaneTexture = THREE.ImageUtils.loadTexture("name-shadow.png");
 	
@@ -152,9 +159,15 @@ function initLight() {
 }
 
 function moveCamera(){
+	//move the camera
 	camera.position.x = ($(window).width())/2 - mouseX;
 	camera.position.y = ($(window).height())/2 - mouseY;
 	
+	//move the shadow
+	shadowPlane.position.x = (-camera.position.x*.13) - 200;
+	shadowPlane.position.y = (-camera.position.y*.13) + 220;
+	
+	//aim the camera
 	camera.lookAt(scene.position);
 }
 
@@ -164,10 +177,13 @@ function animate() {
 	// 	cameraRotate(mouseX, mouseY);
 	// }
 	
-	moveCamera();
-	
-	requestAnimationFrame(animate);
-	render();
+	if(mouseOver){
+		
+		moveCamera();
+		
+		requestAnimationFrame(animate);
+		render();
+	}
 }
 
 function render() {
