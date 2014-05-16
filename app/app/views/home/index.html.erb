@@ -1,11 +1,12 @@
 
 
 
-<!--
+
 <div id="image_box">
 
 <% $projects.each do |project| %>
 	
+<!--
 	<div class="col">
 	
 		<div class="project-tile">
@@ -19,13 +20,25 @@
 		</div>
 	
 	</div>
+-->
+	<script>
+		projectArray.push({	title: "<%= project.title.to_s %>",
+							agency: "<%= project.agency.to_s %>",
+							client: "<%= project.client.to_s %>",
+							thumb: "<%= project.thumb.to_s %>",
+							img: "<%= project.img.to_s %>",
+							link: "<%= project.link.to_s %>",
+							description: "<%= project.description.to_s %>"
+							});
+	</script>
 
 <% end %>
 
 </div>
--->
+
 
 
 <script>
 init();
+console.log(projectArray);
 </script>
