@@ -33,6 +33,8 @@ var namePlaneH;
 var shadowPlaneW;
 var shadowPlaneH;
 
+var projectArray = [];
+
 
 
 $(window).mousemove(function(e) {
@@ -42,6 +44,7 @@ $(window).mousemove(function(e) {
 	//mouseOver = true;
 });
 
+/*
 $(window).mouseenter(function(e) {
 	//mouseOver = true;
 });
@@ -49,6 +52,7 @@ $(window).mouseenter(function(e) {
 $(window).mouseleave(function(e) {
 	//mouseOver = false;
 });
+*/
 
 $(window).mouseOver(function(e) {
 	mouseOver = true;
@@ -99,12 +103,14 @@ function init() {
 function initScene() {
 	initBackground();
 	initName();
+	initPortfolio();
 	
 }
 
 function initBackground(){
-	backgroundPlaneW = 750;
-	backgroundPlaneH = 750;
+	//propertion is 1024x800
+	backgroundPlaneW = 1024;
+	backgroundPlaneH = 800;
 	
 	var backgroundPlaneTexture = THREE.ImageUtils.loadTexture("backgroundPlane.jpg");
 	
@@ -154,6 +160,10 @@ function initName(){
 	shadowPlane.position.y = 200;
 }
 
+function initPortfolio(){
+	
+}
+
 function initLight() {
 	
 }
@@ -172,11 +182,6 @@ function moveCamera(){
 }
 
 function animate() {
-	//debug("animate()");
-	// if (cameraMove) {
-	// 	cameraRotate(mouseX, mouseY);
-	// }
-	
 	if(mouseOver){
 		
 		moveCamera();
@@ -187,45 +192,5 @@ function animate() {
 }
 
 function render() {
-
-
 	renderer.render(scene, camera);
 }
-
-/*
-//this makes calls the animation loop
-(function() {
-
-	var lastTime = 0;
-	var vendors = ['ms', 'moz', 'webkit', 'o'];
-
-	for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-
-		window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-		window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
-
-	}
-
-	if (window.requestAnimationFrame === undefined) {
-
-		window.requestAnimationFrame = function(callback) {
-
-			var currTime = Date.now(),
-				timeToCall = Math.max(0, 16 - (currTime - lastTime));
-			var id = window.setTimeout(function() {
-				callback(currTime + timeToCall);
-			}, timeToCall);
-			lastTime = currTime + timeToCall;
-			return id;
-
-		};
-
-	}
-
-	window.cancelAnimationFrame = window.cancelAnimationFrame ||
-	function(id) {
-		window.clearTimeout(id)
-	};
-
-}());
-*/
