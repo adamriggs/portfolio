@@ -13,7 +13,8 @@ var pointLightAngle = Math.PI / 2;
 var cameraMove = true;
 var mouseX, mouseY;
 
-
+var animating = false;
+var animationComplete = true;
 
 
 
@@ -63,25 +64,73 @@ function init() {
 
 	initScene();
 	initLight();
-	leap.connect();
 
 	animate();
 }
 
 function initScene() {
 	
+/*
 	var loader = new THREE.JSONLoader();
 	loader.load("obj/minion/minion.js", buildModel);
 	
 	var handLoader = new THREE.JSONLoader();
 	handLoader.load("obj/hand.js", buildHand);
+*/
 	
+/*
 	var geo = new THREE.SphereGeometry(2);
 	var mat = new THREE.MeshBasicMaterial({color: 0xa4a4a4, wireframe: true});
 	fingertip = new THREE.Mesh(geo,mat);
 	scene.add(fingertip);
 	fingertip.position.x =50;
+*/
 
+}
+
+function initLight() {
+
+}
+
+function animate() {
+	//debug("animate()");
+	// if (cameraMove) {
+	// 	cameraRotate(mouseX, mouseY);
+	// }
+	
+	
+/*
+	if(animating && modelCollapsed == false){
+		collapseModel(velocity);
+		velocity *= acceleration;
+		particleSystem.geometry.verticesNeedUpdate = true;
+	}
+	
+	if(animating && modelCollapsed){
+		raiseModel(velocity);
+		velocity *= acceleration;
+		particleSystem.geometry.verticesNeedUpdate = true;
+	}
+	
+	frame = leap.frame();
+	
+	if(frame && frame.fingers && frame.fingers.length>0){
+		
+		fingertip.position.x = frame.fingers[0].tipPosition[0];
+		fingertip.position.y = frame.fingers[0].tipPosition[1]/200;
+		fingertip.position.z = frame.fingers[0].tipPosition[2];
+	
+		//debug(fingertip.position.x +", " +fingertip.position.y +", " + fingertip.position.z);
+		//debug(frame.fingers[0].tipPosition.x +", " + frame.fingers[0].tipPosition.y +", " + frame.fingers[0].tipPosition.z);
+		//debug(frame.fingers[0].tipPosition);
+		
+	}
+	
+	checkCollision();
+*/
+	
+	requestAnimationFrame(animate);
+	render();
 }
 
 function render() {
