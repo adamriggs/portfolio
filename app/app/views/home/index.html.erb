@@ -12,7 +12,9 @@
 			Agency: <%= project.agency.to_s %><br>
 			Client: <%= project.client.to_s %><br>
 			Description: <%= project.description.to_s %><br>
-			<a><%= project.link.to_s %></a>
+			<% if project.link.to_s != "" %>
+				<a href="<%= project.link.to_s %>">Link</a>
+			<% end %>
 		</div>
 	
 	</div>
