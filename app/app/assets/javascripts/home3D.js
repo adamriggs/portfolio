@@ -33,6 +33,10 @@ var namePlaneH;
 var shadowPlaneW;
 var shadowPlaneH;
 
+var projectPlaneW;
+var projectPlaneH;
+var projectPlaneArray = [];
+
 var projectArray = [];
 
 
@@ -161,7 +165,22 @@ function initName(){
 }
 
 function initPortfolio(){
+	projectPlaneW = 192;
+	projectPlaneH = 144;
 	
+	var len = projectArray.length;
+	
+	for( var i = 0; i< len; i++){
+		var tex = THREE.ImageUtils.loadTexture(projectArray[i].thumb.toString());
+	
+		var projectPlane = new THREE.Mesh(new THREE.PlaneGeometry(projectPlaneW, projectPlaneH), new THREE.MeshBasicMaterial({
+			map: tex
+		}));
+		
+		projectPlaneArray.push(projectPlane);
+		
+		scene.add(projectPlane);
+	}
 }
 
 function initLight() {
