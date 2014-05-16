@@ -17,17 +17,24 @@ var animating = false;
 var animationComplete = true;
 
 //specifics
+/*
 var texture, material, mesh;
 var planeGeo=[], planeMat=[], planeMesh=[];
+*/
+
 var backgroundPlane;
 var namePlane;
+var shadowPlane;
 
 //parameters
-var backgroundPlaneW = 750;
-var backgroundPlaneH = 750;
+var backgroundPlaneW;
+var backgroundPlaneH;
 
-var namePlaneW = 200;
-var namePlaneH = 40;
+var namePlaneW;
+var namePlaneH;
+
+var shadowPlaneW;
+var shadowPlaneH;
 
 
 
@@ -89,23 +96,55 @@ function initScene() {
 }
 
 function initBackground(){
+	backgroundPlaneW = 750;
+	backgroundPlaneH = 750;
+	
 	var backgroundPlaneTexture = THREE.ImageUtils.loadTexture("backgroundPlane.jpg");
+	
 	backgroundPlane = new THREE.Mesh(new THREE.PlaneGeometry(backgroundPlaneW, backgroundPlaneH), new THREE.MeshBasicMaterial({
 		map: backgroundPlaneTexture
 	}));
+	
 	scene.add(backgroundPlane);
 }
 
 function initName(){
+
+	//name
+	//proportion is 493/99
+	namePlaneW = 300;
+	namePlaneH = 60;
+	
 	var namePlaneTexture = THREE.ImageUtils.loadTexture("name-white.png");
+	
 	namePlane = new THREE.Mesh(new THREE.PlaneGeometry(namePlaneW, namePlaneH), new THREE.MeshBasicMaterial({
 		map: namePlaneTexture,
 		transparent: true
 	}));
+	
 	scene.add(namePlane);
+	
 	namePlane.position.z = 100;
 	namePlane.position.x = -200;
 	namePlane.position.y = 200;
+	
+	//shadow
+	//proportion is 634/153
+	shadowPlaneW = 400;
+	shadowPlaneH = 90;
+	
+	var shadowPlaneTexture = THREE.ImageUtils.loadTexture("name-shadow.png");
+	
+	shadowPlane = new THREE.Mesh(new THREE.PlaneGeometry(shadowPlaneW, shadowPlaneH), new THREE.MeshBasicMaterial({
+		map: shadowPlaneTexture,
+		transparent: true
+	}));
+	
+	scene.add(shadowPlane);
+	
+	shadowPlane.position.z = 10;
+	shadowPlane.position.x = -200;
+	shadowPlane.position.y = 200;
 }
 
 function initLight() {
