@@ -11,7 +11,8 @@ var pointLights = [];
 var pointLightAngle = Math.PI / 2;
 
 var cameraMove = true;
-var mouseX, mouseY;
+var mouseX = ($(window).width())/2;
+var mouseY = ($(window).height())/2;
 
 var animating = false;
 var animationComplete = true;
@@ -170,6 +171,8 @@ function initPortfolio(){
 	
 	var len = projectArray.length;
 	
+	var yPos = len * projectPlaneH;
+	
 	for( var i = 0; i< len; i++){
 		var tex = THREE.ImageUtils.loadTexture(projectArray[i].thumb.toString());
 	
@@ -180,6 +183,12 @@ function initPortfolio(){
 		projectPlaneArray.push(projectPlane);
 		
 		scene.add(projectPlane);
+		
+		projectPlane.position.z = 100;
+		projectPlane.position.x = 300;
+		projectPlane.position.y = yPos;
+		
+		yPos -= projectPlaneH + 10;
 	}
 }
 
