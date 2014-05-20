@@ -240,7 +240,7 @@ function scrollPlanes(){
 		projectPlaneArray[i].position.y -= planeRate;
 		projectPlaneArray[i].position.z = (projectPlaneArray[i].position.y * projectPlaneArray[i].position.y) / -1200;
 		projectPlaneArray[i].position.z = projectPlaneArray[i].position.z + planeZSpacer;
-		projectPlaneArray[i].rotation = projectPlaneArray[i].position.y/600;
+		projectPlaneArray[i].rotation.x = -projectPlaneArray[i].position.y/600;
 		if(projectPlaneArray[i].position.y<0){
 			projectPlaneArray[i].rotation *= -1;
 		}
