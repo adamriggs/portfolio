@@ -19,6 +19,7 @@ var animationComplete = true;
 
 var mouseOver = true;
 var planesScrolling = false;
+var planeRate = 0;
 
 //specifics
 var backgroundPlane;
@@ -41,6 +42,8 @@ var projectPlaneArray = [];
 
 var projectArray = [];
 
+var planeZSpacer = 200;
+
 
 
 $(window).mousemove(function(e) {
@@ -51,6 +54,10 @@ $(window).mousemove(function(e) {
 	
 	if(mouseX> 850 && mouseX<1050){
 		planesScrolling = true;
+		planeRate = 10;
+		if(mouseY > ($(window).height()/2)){
+			planeRate*=-1;
+		}
 	} else {
 		planesScrolling = false;
 	}
@@ -187,7 +194,8 @@ function initPortfolio(){
 	
 		var projectPlane = new THREE.Mesh(new THREE.PlaneGeometry(projectPlaneW, projectPlaneH), new THREE.MeshBasicMaterial({
 			map: tex,
-			antialiasing:true
+			antialiasing:true,
+			side: THREE.DoubleSide
 		}));
 		
 		projectPlaneArray.push(projectPlane);
@@ -198,7 +206,7 @@ function initPortfolio(){
 		
 		projectPlane.position.x = 300;
 		projectPlane.position.y = posObj.y;
-		projectPlane.position.z = posObj.z + 150;
+		projectPlane.position.z = posObj.z + planeZSpacer;
 		projectPlane.rotation.x = posObj.rotation;
 		//tracePlanePosData(projectPlane);
 		
@@ -226,10 +234,21 @@ function positionPlane(pos){
 
 function scrollPlanes(){
 	console.log("scrollPlanes()");
-	
+	var len = projectPlaneArray.length;
+	var i=0;
+	for(i=0; i<len; i++){
+		projectPlaneArray[i].position.y -= planeRate;
+		projectPlaneArray[i].position.z = (projectPlaneArray[i].position.y * projectPlaneArray[i].position.y) / -1200;
+		projectPlaneArray[i].position.z = projectPlaneArray[i].position.z + planeZSpacer;
+		projectPlaneArray[i].rotation = projectPlaneArray[i].position.y/600;
+		if(projectPlaneArray[i].position.y<0){
+			projectPlaneArray[i].rotation *= -1;
+		}
+	}
 }
 
 function scrollToPlane(id){
+	
 	
 }
 
