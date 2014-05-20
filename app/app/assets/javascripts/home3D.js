@@ -1,7 +1,7 @@
 //basics
 var camera, scene, renderer;
 var container;
-var cameraDistance = 2000;
+var cameraDistance = 1000;
 var cameraSpeed = .01;
 var cameraHorzAngle = Math.PI / 2;
 var cameraVertAngle = Math.PI / 2;
@@ -18,6 +18,7 @@ var animating = false;
 var animationComplete = true;
 
 var mouseOver = true;
+var planesScrolling = false;
 
 //specifics
 var backgroundPlane;
@@ -45,6 +46,14 @@ var projectArray = [];
 $(window).mousemove(function(e) {
 	mouseX = e.pageX;
 	mouseY = e.pageY;
+	
+	//console.log("x="+mouseX);
+	
+	if(mouseX> 850 && mouseX<1050){
+		planesScrolling = true;
+	} else {
+		planesScrolling = false;
+	}
 	
 	//mouseOver = true;
 });
@@ -106,7 +115,7 @@ function init() {
 }
 
 function initScene() {
-	//initBackground();
+	initBackground();
 	initName();
 	initPortfolio();
 	
@@ -189,15 +198,17 @@ function initPortfolio(){
 		
 		projectPlane.position.x = 300;
 		projectPlane.position.y = posObj.y;
-		projectPlane.position.z = posObj.z;
-		projectPlane.rotation.x = 0; //posObj.rotation;
-		tracePlanePosData(projectPlane);
+		projectPlane.position.z = posObj.z + 150;
+		projectPlane.rotation.x = posObj.rotation;
+		//tracePlanePosData(projectPlane);
 		
 		yPos -= projectPlaneH + 10;
 	}
 }
 
 function positionPlane(pos){
+
+//The equation for the parabola of planes is y^2=-1200x.
 	var posObj = {};
 	var zCoef = projectPlaneH;
 	var a = 100;
@@ -206,11 +217,20 @@ function positionPlane(pos){
 	pos += 1;
 	pos2 = pos * zCoef;
 	
-	posObj.y =  Math.sqrt( 4 * a * pos2);
-	posObj.z = -pos * pos * 10;
-	posObj.rotation = pos > 0 ? a / Math.sqrt(a * pos2) : 0;
+	posObj.y =  pos2;
+	posObj.z = (posObj.y * posObj.y) / -1200;
+	posObj.rotation = pos > 0 ? -posObj.y/600 : 0;
 	
 	return posObj;
+}
+
+function scrollPlanes(){
+	console.log("scrollPlanes()");
+	
+}
+
+function scrollToPlane(id){
+	
 }
 
 function sinh(x){
@@ -254,14 +274,6 @@ function moveCamera(){
 	camera.lookAt(scene.position);
 }
 
-function scrollPlanes(){
-	
-}
-
-function scrollToPlane(id){
-	
-}
-
 function animate() {
 	if(mouseOver){
 		
@@ -269,6 +281,10 @@ function animate() {
 		
 		requestAnimationFrame(animate);
 		render();
+		
+		if(planesScrolling){
+			scrollPlanes();
+		}
 	}
 }
 
