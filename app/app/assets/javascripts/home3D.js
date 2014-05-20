@@ -45,7 +45,6 @@ var projectArray = [];
 var planeZSpacer = 200;
 
 
-
 $(window).mousemove(function(e) {
 	mouseX = e.pageX;
 	mouseY = e.pageY;
@@ -114,11 +113,16 @@ function init() {
 	renderer.setSize(window.innerWidth, window.innerHeight);
 
 	container.appendChild(renderer.domElement);
-
+	
+	initEvents();
 	initScene();
 	initLight();
 
 	animate();
+}
+
+function initEvents(){
+	
 }
 
 function initScene() {
@@ -187,8 +191,6 @@ function initPortfolio(){
 	
 	var len = projectArray.length;
 	
-	var yPos = len * projectPlaneH;
-	
 	for( var i = 0; i< len; i++){
 		var tex = THREE.ImageUtils.loadTexture(projectArray[i].thumb.toString());
 	
@@ -209,8 +211,6 @@ function initPortfolio(){
 		projectPlane.position.z = posObj.z + planeZSpacer;
 		projectPlane.rotation.x = posObj.rotation;
 		//tracePlanePosData(projectPlane);
-		
-		yPos -= projectPlaneH + 10;
 	}
 }
 
@@ -222,8 +222,8 @@ function positionPlane(pos){
 	var a = 100;
 	var spacer = 10;
 	
-	pos += 1;
-	pos2 = pos * zCoef;
+	//pos += 1;
+	pos2 = (pos+1) * zCoef;
 	
 	posObj.y =  pos2;
 	posObj.z = (posObj.y * posObj.y) / -1200;
@@ -233,18 +233,28 @@ function positionPlane(pos){
 }
 
 function scrollPlanes(){
-	console.log("scrollPlanes()");
+	//console.log("scrollPlanes()");
 	var len = projectPlaneArray.length;
 	var i=0;
-	for(i=0; i<len; i++){
-		projectPlaneArray[i].position.y -= planeRate;
-		projectPlaneArray[i].position.z = (projectPlaneArray[i].position.y * projectPlaneArray[i].position.y) / -1200;
-		projectPlaneArray[i].position.z = projectPlaneArray[i].position.z + planeZSpacer;
-		projectPlaneArray[i].rotation.x = -projectPlaneArray[i].position.y/600;
-		if(projectPlaneArray[i].position.y<0){
-			projectPlaneArray[i].rotation *= -1;
+	var planeZeroTmp = projectPlaneArray[0].position.y - planeRate;
+	var planeLenTmp = projectPlaneArray[len-1].position.y - planeRate;
+	
+	if(planeLenTmp<=0 || planeZeroTmp>=200){
+		
+	} else {
+		
+		for(i=0; i<len; i++){
+			projectPlaneArray[i].position.y -= planeRate;
+			projectPlaneArray[i].position.z = (projectPlaneArray[i].position.y * projectPlaneArray[i].position.y) / -1200;
+			projectPlaneArray[i].position.z = projectPlaneArray[i].position.z + planeZSpacer;
+			projectPlaneArray[i].rotation.x = -projectPlaneArray[i].position.y/600;
+			if(projectPlaneArray[i].position.y<0){
+				projectPlaneArray[i].rotation *= -1;
+			}
 		}
 	}
+	//console.log("projectPlaneArray[0].position.y=="+projectPlaneArray[0].position.y);
+	//console.log("projectPlaneArray[len-1].position.y=="+projectPlaneArray[len-1].position.y);
 }
 
 function scrollToPlane(id){
