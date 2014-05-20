@@ -51,7 +51,7 @@ var projectArray = [];
 var planeZSpacer = 200;
 
 
-$(window).mousemove(function(e) {
+$(window).on("mousemove", function(e) {
 	mouseX = e.pageX;
 	mouseY = e.pageY;
 	
@@ -76,15 +76,15 @@ $(window).mouseleave(function(e) {
 });
 */
 
-$(window).mouseOver(function(e) {
+$(window).on("mouseOver", function(e) {
 	mouseOver = true;
 });
 
-$(window).mouseOut(function(e) {
+$(window).on("mouseOut", function(e) {
 	mouseOver = false;
 });
 
-$(window).click(function(e) {
+$(window).on("click", function(e) {
 	
 });
 
@@ -125,7 +125,7 @@ function onMouseDown(event_info){
     //does touch the sphere object
     if( intersects.length>0) {
         
-        alert( "hit" );
+       console.log( "hit" );
         
     }
 }
@@ -244,6 +244,8 @@ function initPortfolio(){
 			antialiasing:true,
 			side: THREE.DoubleSide
 		}));
+		
+		projectPlane.data=projectArray[i];
 		
 		projectPlaneArray.push(projectPlane);
 		
