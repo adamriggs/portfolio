@@ -1,7 +1,7 @@
 //basics
 var camera, scene, renderer;
 var container;
-var cameraDistance = 1000;
+var cameraDistance = 2000;
 var cameraSpeed = .01;
 var cameraHorzAngle = Math.PI / 2;
 var cameraVertAngle = Math.PI / 2;
@@ -106,7 +106,7 @@ function init() {
 }
 
 function initScene() {
-	initBackground();
+	//initBackground();
 	initName();
 	initPortfolio();
 	
@@ -129,7 +129,7 @@ function initBackground(){
 function initName(){
 
 	//name
-	//proportion is 493/99
+	//proportion is 493/99 = 4.979797...
 	namePlaneW = 300;
 	namePlaneH = 60;
 	
@@ -147,7 +147,7 @@ function initName(){
 	namePlane.position.y = 200;
 	
 	//shadow
-	//proportion is 634/153
+	//proportion is 634/153 = 4.2026
 	shadowPlaneW = 500;
 	shadowPlaneH = 121;
 	
@@ -177,19 +177,64 @@ function initPortfolio(){
 		var tex = THREE.ImageUtils.loadTexture(projectArray[i].thumb.toString());
 	
 		var projectPlane = new THREE.Mesh(new THREE.PlaneGeometry(projectPlaneW, projectPlaneH), new THREE.MeshBasicMaterial({
-			map: tex
+			map: tex,
+			antialiasing:true
 		}));
 		
 		projectPlaneArray.push(projectPlane);
 		
 		scene.add(projectPlane);
 		
-		projectPlane.position.z = 100;
+		var posObj = positionPlane(i);
+		
 		projectPlane.position.x = 300;
-		projectPlane.position.y = yPos;
+		projectPlane.position.y = posObj.y;
+		projectPlane.position.z = posObj.z;
+		projectPlane.rotation.x = 0; //posObj.rotation;
+		tracePlanePosData(projectPlane);
 		
 		yPos -= projectPlaneH + 10;
 	}
+}
+
+function positionPlane(pos){
+	var posObj = {};
+	var zCoef = projectPlaneH;
+	var a = 100;
+	var spacer = 10;
+	
+	pos += 1;
+	pos2 = pos * zCoef;
+	
+	posObj.y =  Math.sqrt( 4 * a * pos2);
+	posObj.z = -pos * pos * 10;
+	posObj.rotation = pos > 0 ? a / Math.sqrt(a * pos2) : 0;
+	
+	return posObj;
+}
+
+function sinh(x){
+    return (Math.exp(x) - Math.exp(-x)) / 2;
+}
+
+function asinh(x) {
+  return Math.log(x + Math.sqrt(x * x + 1));
+}
+
+function degToRad(deg){
+	return deg * (Math.PI/180);
+}
+
+function radToDeg(rad){
+	return rad * (180/Math.PI);
+}
+
+function tracePlanePosData(projectPlane){
+		//console.log("x="+projectPlane.position.x);
+		console.log("y="+projectPlane.position.y);
+		console.log("z="+projectPlane.position.z);
+		console.log("r="+projectPlane.rotation.x);
+		console.log("*****");
 }
 
 function initLight() {
@@ -207,6 +252,14 @@ function moveCamera(){
 	
 	//aim the camera
 	camera.lookAt(scene.position);
+}
+
+function scrollPlanes(){
+	
+}
+
+function scrollToPlane(id){
+	
 }
 
 function animate() {
