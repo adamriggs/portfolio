@@ -21,6 +21,12 @@ var mouseOver = true;
 var planesScrolling = false;
 var planeRate = 0;
 
+var projector;
+var mouse_vector;
+var mouse;
+var ray;
+var intersects;
+
 //specifics
 var backgroundPlane;
 var namePlane;
@@ -49,8 +55,6 @@ $(window).mousemove(function(e) {
 	mouseX = e.pageX;
 	mouseY = e.pageY;
 	
-	//console.log("x="+mouseX);
-	
 	if(mouseX> 850 && mouseX<1050){
 		planesScrolling = true;
 		planeRate = 10;
@@ -60,8 +64,6 @@ $(window).mousemove(function(e) {
 	} else {
 		planesScrolling = false;
 	}
-	
-	//mouseOver = true;
 });
 
 /*
@@ -83,16 +85,50 @@ $(window).mouseOut(function(e) {
 });
 
 $(window).click(function(e) {
-	//if (cameraMove) cameraMove = false;
-	//else cameraMove = true;
-/*
-	if(animationComplete){
-		animating = true;
-		animationComplete = false;
-		velocity = .01;
-	}
-*/
+	
 });
+
+function onMouseDown(event_info){
+	event_info.preventDefault();
+	
+	intersects = [];
+	console.log(intersects.length);
+	
+	mouse.x = ( event_info.clientX / window.innerWidth ) * 2 - 1;
+    mouse.y = - ( event_info.clientY / window.innerHeight ) * 2 + 1;
+    
+    //this vector caries the mouse click cordinates
+    mouse_vector.set( mouse.x, mouse.y, mouse.z );
+    
+    //the final step of the transformation process, basically this method call
+    //creates a point in 3d space where the mouse click occurd
+    projector.unprojectVector( mouse_vector, camera );
+    
+    var direction = mouse_vector.sub( camera.position ).normalize();
+    
+    //ray = new THREE.Raycaster( camera.position, direction );
+    ray.set( camera.position, direction );
+    
+    //asking the raycaster if the mouse click touched the sphere object
+    var len = projectPlaneArray.length;
+    var i=0;
+    for(i=0; i<len; i++){
+    	var touch = ray.intersectObject(projectPlaneArray[i]);
+    	console.log(touch);
+    	if(touch.length > 0){
+	    	intersects.push(touch);
+	    } 
+    }
+    
+    
+    //the ray will return an array with length of 1 or greater if the mouse click
+    //does touch the sphere object
+    if( intersects.length>0) {
+        
+        alert( "hit" );
+        
+    }
+}
 
 
 function init() {
@@ -111,8 +147,17 @@ function init() {
 		antialias: false
 	});
 	renderer.setSize(window.innerWidth, window.innerHeight);
-
+	
+	projector = new THREE.Projector();
+	mouse_vector = new THREE.Vector3();
+	mouse = { x: 0, y: 0, z: 1 };
+	ray = new THREE.Raycaster(new THREE.Vector3(0,0,0), new THREE.Vector3(0,0,0));
+	intersects = [];
+	
 	container.appendChild(renderer.domElement);
+	
+	container.addEventListener( 'mousedown', onMouseDown );
+
 	
 	initEvents();
 	initScene();
