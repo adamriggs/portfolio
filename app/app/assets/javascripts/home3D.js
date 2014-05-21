@@ -50,6 +50,12 @@ var projectArray = [];
 
 var planeZSpacer = 200;
 
+var topScrollArea_top = 0;
+var topScrollArea_bottom = ($(window).height()/2)-50;
+
+var bottomScrollArea_top = ($(window).height()/2)+50;
+var bottomScrollArea_bottom = $(window).height();
+
 
 $(window).on("mousemove", function(e) {
 	mouseX = e.pageX;
@@ -57,12 +63,22 @@ $(window).on("mousemove", function(e) {
 	
 	if(mouseX> 850 && mouseX<1050){
 		planesScrolling = true;
-		planeRate = 10;
-		if(mouseY > ($(window).height()/2)){
+		if(mouseY > topScrollArea_bottom){
+			//console.log("*****TOP AREA");
+			planeRate = bottomScrollArea_bottom / (bottomScrollArea_bottom - mouseY);
 			planeRate*=-1;
+			if(planeRate < -10){planeRate = -10;}
+			//console.log("planeRate=="+planeRate);
+		}
+		if(mouseY < bottomScrollArea_top){
+			//console.log("*****BOTTOM AREA");
+			planeRate = bottomScrollArea_top / mouseY;
+			if(planeRate > 10){planeRate = 10;}
+			//console.log("planeRate=="+planeRate);
 		}
 	} else {
 		planesScrolling = false;
+		planeRate = 0;
 	}
 });
 
@@ -92,7 +108,7 @@ function onMouseDown(event_info){
 	event_info.preventDefault();
 	
 	intersects = [];
-	console.log(intersects.length);
+	//console.log(intersects.length);
 	
 	mouse.x = ( event_info.clientX / window.innerWidth ) * 2 - 1;
     mouse.y = - ( event_info.clientY / window.innerHeight ) * 2 + 1;
@@ -114,9 +130,9 @@ function onMouseDown(event_info){
     var i=0;
     for(i=0; i<len; i++){
     	var touch = ray.intersectObject(projectPlaneArray[i]);
-    	console.log(touch);
+    	//console.log(touch);
     	if(touch.length > 0){
-	    	intersects.push(touch);
+	    	intersects = touch;
 	    } 
     }
     
@@ -124,8 +140,8 @@ function onMouseDown(event_info){
     //the ray will return an array with length of 1 or greater if the mouse click
     //does touch the sphere object
     if( intersects.length>0) {
-        
-       console.log( "hit" );
+        console.log(intersects[0].object.data);
+       //console.log( "hit" );
         
     }
 }
@@ -286,7 +302,7 @@ function scrollPlanes(){
 	var planeZeroTmp = projectPlaneArray[0].position.y - planeRate;
 	var planeLenTmp = projectPlaneArray[len-1].position.y - planeRate;
 	
-	if(planeLenTmp<=0 || planeZeroTmp>=200){
+	if(planeLenTmp<=0 || planeZeroTmp>=projectPlaneH){
 		
 	} else {
 		
@@ -339,7 +355,7 @@ function initLight() {
 
 function moveCamera(){
 	//move the camera
-	camera.position.x = ($(window).width())/2 - mouseX;
+	camera.position.x = mouseX - ($(window).width())/2;
 	camera.position.y = ($(window).height())/2 - mouseY;
 	
 	//move the shadow
