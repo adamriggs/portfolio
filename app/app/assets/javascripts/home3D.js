@@ -1,3 +1,10 @@
+
+//************************
+//
+//	VARIABLES
+//
+//************************
+
 //basics
 var camera, scene, renderer;
 var container;
@@ -51,11 +58,17 @@ var projectArray = [];
 var planeZSpacer = 200;
 
 var topScrollArea_top = 0;
-var topScrollArea_bottom = ($(window).height()/2)-50;
+var topScrollArea_bottom = ($(window).height()/2)-100;
 
-var bottomScrollArea_top = ($(window).height()/2)+50;
+var bottomScrollArea_top = ($(window).height()/2)+100;
 var bottomScrollArea_bottom = $(window).height();
 
+
+//************************
+//
+//	EVENTS
+//
+//************************
 
 $(window).on("mousemove", function(e) {
 	mouseX = e.pageX;
@@ -146,6 +159,12 @@ function onMouseDown(event_info){
     }
 }
 
+
+//************************
+//
+//	INIT
+//
+//************************
 
 function init() {
 	//debug("init()");
@@ -277,6 +296,40 @@ function initPortfolio(){
 	}
 }
 
+function initLight() {
+	
+}
+
+
+
+//************************
+//
+//	MATH
+//
+//************************
+
+function sinh(x){
+    return (Math.exp(x) - Math.exp(-x)) / 2;
+}
+
+function asinh(x) {
+  return Math.log(x + Math.sqrt(x * x + 1));
+}
+
+function degToRad(deg){
+	return deg * (Math.PI/180);
+}
+
+function radToDeg(rad){
+	return rad * (180/Math.PI);
+}
+
+//************************
+//
+//	POSITIONING
+//
+//************************
+
 function positionPlane(pos){
 
 //The equation for the parabola of planes is y^2=-1200x.
@@ -325,34 +378,6 @@ function scrollToPlane(id){
 	
 }
 
-function sinh(x){
-    return (Math.exp(x) - Math.exp(-x)) / 2;
-}
-
-function asinh(x) {
-  return Math.log(x + Math.sqrt(x * x + 1));
-}
-
-function degToRad(deg){
-	return deg * (Math.PI/180);
-}
-
-function radToDeg(rad){
-	return rad * (180/Math.PI);
-}
-
-function tracePlanePosData(projectPlane){
-		//console.log("x="+projectPlane.position.x);
-		console.log("y="+projectPlane.position.y);
-		console.log("z="+projectPlane.position.z);
-		console.log("r="+projectPlane.rotation.x);
-		console.log("*****");
-}
-
-function initLight() {
-	
-}
-
 function moveCamera(){
 	//move the camera
 	camera.position.x = mouseX - ($(window).width())/2;
@@ -365,6 +390,20 @@ function moveCamera(){
 	//aim the camera
 	camera.lookAt(scene.position);
 }
+
+function tracePlanePosData(projectPlane){
+		//console.log("x="+projectPlane.position.x);
+		console.log("y="+projectPlane.position.y);
+		console.log("z="+projectPlane.position.z);
+		console.log("r="+projectPlane.rotation.x);
+		console.log("*****");
+}
+
+//************************
+//
+//	ANIMATION
+//
+//************************
 
 function animate() {
 	if(mouseOver){
