@@ -63,6 +63,8 @@ var topScrollArea_bottom = ($(window).height()/2)-100;
 var bottomScrollArea_top = ($(window).height()/2)+100;
 var bottomScrollArea_bottom = $(window).height();
 
+var infoCardPlane;
+
 
 //************************
 //
@@ -209,7 +211,7 @@ function initScene() {
 	initBackground();
 	initName();
 	initPortfolio();
-	
+	initInfoCard();
 }
 
 function initBackground(){
@@ -276,8 +278,10 @@ function initPortfolio(){
 	
 		var projectPlane = new THREE.Mesh(new THREE.PlaneGeometry(projectPlaneW, projectPlaneH), new THREE.MeshBasicMaterial({
 			map: tex,
-			antialiasing:true,
+			antialiasing:true/*
+,
 			side: THREE.DoubleSide
+*/
 		}));
 		
 		projectPlane.data=projectArray[i];
@@ -294,6 +298,56 @@ function initPortfolio(){
 		projectPlane.rotation.x = posObj.rotation;
 		//tracePlanePosData(projectPlane);
 	}
+}
+
+function initInfoCard(){
+	
+	var cardW = 300;
+	var cardH = 200;
+	var text = "hello world";
+	
+	var bitmap = document.createElement('canvas');
+	bitmap.width = cardW;
+	bitmap.height = cardH;
+	
+	var g = bitmap.getContext('2d');
+	g.globalAlpha = .3;
+	g.fillStyle = "0xFFCC00";
+	g.fillRect(0,0,cardW,cardH);	
+/*
+	g.rect(0,0,cardW,cardH);
+	g.stroke();
+*/
+	g.globalAlpha = 1;
+	g.font = 'Bold 20px Arial';
+	g.fillStyle = 'blue';
+	g.fillText(text, 20, 20);
+/*
+	g.strokeStyle = 'white';
+	g.strokeText(text, 0, 20);
+*/
+	
+	// canvas contents will be used for a texture
+	var tex = new THREE.Texture(bitmap);
+	
+	var mat = new THREE.MeshBasicMaterial({
+			map: tex,
+			antialiasing:true,
+			transparent:true,
+			color:0x000000
+		});
+	
+	infoCardPlane = new THREE.Mesh(new THREE.PlaneGeometry(cardW, cardH), mat);
+	mat.opacity = .9;
+	//mat.needsUpdate = true;
+	
+	tex.needsUpdate = true;
+	
+	scene.add(infoCardPlane);
+	
+	infoCardPlane.position.x = -200;
+	infoCardPlane.position.y = 30;
+	infoCardPlane.position.z = 100;
 }
 
 function initLight() {
