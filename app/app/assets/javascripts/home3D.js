@@ -313,19 +313,11 @@ function initInfoCard(){
 	var g = bitmap.getContext('2d');
 	g.globalAlpha = .3;
 	g.fillStyle = "0xFFCC00";
-	g.fillRect(0,0,cardW,cardH);	
-/*
-	g.rect(0,0,cardW,cardH);
-	g.stroke();
-*/
+	g.fillRect(0,0,cardW,cardH);
 	g.globalAlpha = 1;
 	g.font = 'Bold 20px Arial';
 	g.fillStyle = 'blue';
 	g.fillText(text, 20, 20);
-/*
-	g.strokeStyle = 'white';
-	g.strokeText(text, 0, 20);
-*/
 	
 	// canvas contents will be used for a texture
 	var tex = new THREE.Texture(bitmap);
@@ -476,3 +468,10 @@ function animate() {
 function render() {
 	renderer.render(scene, camera);
 }
+
+//************************
+//
+//	CLASSES AND PROTOTYPES
+//
+//************************
+
