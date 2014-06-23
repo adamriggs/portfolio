@@ -1,7 +1,7 @@
 
 //************************
 //
-//	VARIABLES
+//	VARIABLES 
 //
 //************************
 
@@ -49,8 +49,8 @@ var namePlaneH;
 var shadowPlaneW;
 var shadowPlaneH;
 
-var projectPlaneW;
-var projectPlaneH;
+var projectPlaneW = 192;
+var projectPlaneH = 144;
 var projectPlaneArray = [];
 
 var projectArray = [];
@@ -63,7 +63,7 @@ var topScrollArea_bottom = ($(window).height()/2)-100;
 var bottomScrollArea_top = ($(window).height()/2)+100;
 var bottomScrollArea_bottom = $(window).height();
 
-var infoCardPlane;
+var infoCard;
 
 
 //************************
@@ -120,7 +120,10 @@ $(window).on("click", function(e) {
 });
 
 function onMouseDown(event_info){
+	console.log("onMouseDown()");
 	event_info.preventDefault();
+	
+	var planeClick = false;
 	
 	intersects = [];
 	//console.log(intersects.length);
@@ -140,24 +143,30 @@ function onMouseDown(event_info){
     //ray = new THREE.Raycaster( camera.position, direction );
     ray.set( camera.position, direction );
     
-    //asking the raycaster if the mouse click touched the sphere object
+    //asking the raycaster if the mouse click touched anything
     var len = projectPlaneArray.length;
     var i=0;
     for(i=0; i<len; i++){
-    	var touch = ray.intersectObject(projectPlaneArray[i]);
-    	//console.log(touch);
+    	var touch = ray.intersectObject(projectPlaneArray[i].mesh);
+    	//console.log(i + "==" + touch.toString());
     	if(touch.length > 0){
 	    	intersects = touch;
+	    	planeClick = true;
 	    } 
     }
     
     
     //the ray will return an array with length of 1 or greater if the mouse click
-    //does touch the sphere object
+    //does touch anything
     if( intersects.length>0) {
-        console.log(intersects[0].object.data);
+        //console.log(intersects[0].object.data);
        //console.log( "hit" );
         
+    }
+    
+    if(planeClick){
+	    //updateInfoCard(intersects[0].object.data);
+	    infoCard.switchProjects(intersects[0].object.data)
     }
 }
 
@@ -193,9 +202,6 @@ function init() {
 	
 	container.appendChild(renderer.domElement);
 	
-	container.addEventListener( 'mousedown', onMouseDown );
-
-	
 	initEvents();
 	initScene();
 	initLight();
@@ -204,7 +210,8 @@ function init() {
 }
 
 function initEvents(){
-	
+	container.addEventListener( 'mousedown', onMouseDown );
+	//document.addEventListener( 'mousedown', onDocumentMouseDown, false);
 }
 
 function initScene() {
@@ -298,72 +305,17 @@ function initPortfolio(){
 
 function initInfoCard(){
 	
-	var cardW = 300;
-	var cardH = 200;
-	var text = "hello world";
+	infoCard = new InfoCard();
 	
-	var bitmap = document.createElement('canvas');
-	bitmap.width = cardW;
-	bitmap.height = cardH;
+	scene.add(infoCard.mesh);
 	
-	var g = bitmap.getContext('2d');
-	g.globalAlpha = .3;
-	g.fillStyle = "0xFFCC00";
-	g.fillRect(0,0,cardW,cardH);
-	g.globalAlpha = 1;
-	g.font = 'Bold 20px Arial';
-	g.fillStyle = 'blue';
-	g.fillText(text, 20, 20);
-	
-	// canvas contents will be used for a texture
-	var tex = new THREE.Texture(bitmap);
-	
-	var mat = new THREE.MeshBasicMaterial({
-			map: tex,
-			antialiasing:true,
-			transparent:true,
-			color:0x000000
-		});
-	
-	infoCardPlane = new THREE.Mesh(new THREE.PlaneGeometry(cardW, cardH), mat);
-	mat.opacity = .9;
-	//mat.needsUpdate = true;
-	
-	tex.needsUpdate = true;
-	
-	scene.add(infoCardPlane);
-	
-	infoCardPlane.position.x = -200;
-	infoCardPlane.position.y = 30;
-	infoCardPlane.position.z = 100;
+	infoCard.mesh.position.x = -200;
+	infoCard.mesh.position.y = 30;
+	infoCard.mesh.position.z = 100;
 }
 
 function initLight() {
 	
-}
-
-
-
-//************************
-//
-//	MATH
-//
-//************************
-
-function sinh(x){
-    return (Math.exp(x) - Math.exp(-x)) / 2;
-}
-
-function asinh(x) {
-  return Math.log(x + Math.sqrt(x * x + 1));
-}
-
-function degToRad(deg){
-	return deg * (Math.PI/180);
-}
-
-function radToDeg(rad){
-	return rad * (180/Math.PI);
 }
 
 //************************
@@ -472,8 +424,6 @@ function render() {
 //************************
 
 function ProjectPlane(texPath, data){
-	projectPlaneW = 192;
-	projectPlaneH = 144;
 	
 	this.texPath = texPath;
 	this.tex = THREE.ImageUtils.loadTexture(texPath);
@@ -486,4 +436,102 @@ function ProjectPlane(texPath, data){
 		side: THREE.DoubleSide
 */
 	}));
+	
+	this.mesh.data = data;
+	
+	this.mesh.callback = function(){console.log("title=="+this.data.titleproj)};
+}
+
+function InfoCard(){
+	var cardW = 300;
+	var cardH = 200;
+	this.textX = 20;
+	this.textY = 20;
+	//var text = "hello world";
+	
+	var bitmap = document.createElement('canvas');
+	bitmap.width = cardW;
+	bitmap.height = cardH;
+	
+	var context = bitmap.getContext('2d');
+	context.globalAlpha = .3;
+	context.fillStyle = "0xFFCC00";
+	context.fillRect(0,0,cardW,cardH);
+	context.globalAlpha = 1;
+	context.font = 'Bold 20px Arial';
+	context.fillStyle = 'blue';
+	context.fillText("hello world", this.textX, this.textY);	
+	
+	// canvas contents will be used for a texture
+	var tex = new THREE.Texture(bitmap);
+	
+	var mat = new THREE.MeshBasicMaterial({
+		map: tex,
+		antialiasing:true,
+		transparent:true,
+		color:0x000000
+	});
+	
+	//this.updateText("hello world");
+	
+	this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(cardW, cardH), mat);
+	mat.opacity = .9;
+	mat.needsUpdate = true;
+	tex.needsUpdate = true;
+	
+/*
+	this.clearInfoCard = function(){
+		context.clearRect(0, 0, cardW, cardH);
+		context.globalAlpha = .3;
+		context.fillStyle = "0xFFCC00";
+		context.fillRect(0,0,cardW,cardH);
+		context.globalAlpha = 1;
+	}
+*/
+	
+	this.updateText = function(text){
+		console.log("text=="+text);
+		context.clearRect(0, 0, cardW, cardH);
+		context.globalAlpha = .3;
+		context.fillStyle = "0xFFCC00";
+		context.fillRect(0,0,cardW,cardH);
+		context.globalAlpha = 1;
+		
+		context.font = 'Bold 20px Arial';
+		context.fillStyle = 'white';
+		context.fillText(text, this.textX, this.textY);
+		
+		tex = new THREE.Texture(bitmap);
+		mat.map = tex;
+		mat.needsUpdate = true;
+		tex.needsUpdate = true;
+	}
+	
+	this.switchProjects = function(data){
+		this.updateText(data.title);
+	}
+	
+	//infoCard.updateText('adam');
+}
+
+//************************
+//
+//	MATH
+//
+//************************
+
+function sinh(x){
+    return (Math.exp(x) - Math.exp(-x)) / 2;
+}
+
+function asinh(x) {
+  return Math.log(x + Math.sqrt(x * x + 1));
+}
+
+function degToRad(deg){
+	return deg * (Math.PI/180);
+}
+
+function radToDeg(rad){
+	return rad * (180/Math.PI);
 }
