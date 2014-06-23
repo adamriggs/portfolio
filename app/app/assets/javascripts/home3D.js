@@ -268,34 +268,30 @@ function initName(){
 }
 
 function initPortfolio(){
+/*
 	projectPlaneW = 192;
 	projectPlaneH = 144;
+*/
 	
 	var len = projectArray.length;
 	
 	for( var i = 0; i< len; i++){
-		var tex = THREE.ImageUtils.loadTexture(projectArray[i].thumb.toString());
+		//var tex = THREE.ImageUtils.loadTexture(projectArray[i].thumb.toString());
 	
-		var projectPlane = new THREE.Mesh(new THREE.PlaneGeometry(projectPlaneW, projectPlaneH), new THREE.MeshBasicMaterial({
-			map: tex,
-			antialiasing:true/*
-,
-			side: THREE.DoubleSide
-*/
-		}));
+		var projectPlane = new ProjectPlane(projectArray[i].thumb.toString(), projectArray[i]);
 		
-		projectPlane.data=projectArray[i];
+		//projectPlane.data=projectArray[i];
 		
 		projectPlaneArray.push(projectPlane);
 		
-		scene.add(projectPlane);
+		scene.add(projectPlane.mesh);
 		
 		var posObj = positionPlane(i);
 		
-		projectPlane.position.x = 300;
-		projectPlane.position.y = posObj.y;
-		projectPlane.position.z = posObj.z + planeZSpacer;
-		projectPlane.rotation.x = posObj.rotation;
+		projectPlane.mesh.position.x = 300;
+		projectPlane.mesh.position.y = posObj.y;
+		projectPlane.mesh.position.z = posObj.z + planeZSpacer;
+		projectPlane.mesh.rotation.x = posObj.rotation;
 		//tracePlanePosData(projectPlane);
 	}
 }
@@ -398,20 +394,20 @@ function scrollPlanes(){
 	//console.log("scrollPlanes()");
 	var len = projectPlaneArray.length;
 	var i=0;
-	var planeZeroTmp = projectPlaneArray[0].position.y - planeRate;
-	var planeLenTmp = projectPlaneArray[len-1].position.y - planeRate;
+	var planeZeroTmp = projectPlaneArray[0].mesh.position.y - planeRate;
+	var planeLenTmp = projectPlaneArray[len-1].mesh.position.y - planeRate;
 	
 	if(planeLenTmp<=0 || planeZeroTmp>=projectPlaneH){
 		
 	} else {
 		
 		for(i=0; i<len; i++){
-			projectPlaneArray[i].position.y -= planeRate;
-			projectPlaneArray[i].position.z = (projectPlaneArray[i].position.y * projectPlaneArray[i].position.y) / -1200;
-			projectPlaneArray[i].position.z = projectPlaneArray[i].position.z + planeZSpacer;
-			projectPlaneArray[i].rotation.x = -projectPlaneArray[i].position.y/600;
-			if(projectPlaneArray[i].position.y<0){
-				projectPlaneArray[i].rotation *= -1;
+			projectPlaneArray[i].mesh.position.y -= planeRate;
+			projectPlaneArray[i].mesh.position.z = (projectPlaneArray[i].mesh.position.y * projectPlaneArray[i].mesh.position.y) / -1200;
+			projectPlaneArray[i].mesh.position.z = projectPlaneArray[i].mesh.position.z + planeZSpacer;
+			projectPlaneArray[i].mesh.rotation.x = -projectPlaneArray[i].mesh.position.y/600;
+			if(projectPlaneArray[i].mesh.position.y<0){
+				projectPlaneArray[i].mesh.rotation *= -1;
 			}
 		}
 	}
@@ -475,3 +471,19 @@ function render() {
 //
 //************************
 
+function ProjectPlane(texPath, data){
+	projectPlaneW = 192;
+	projectPlaneH = 144;
+	
+	this.texPath = texPath;
+	this.tex = THREE.ImageUtils.loadTexture(texPath);
+	this.data = data;
+
+	this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(projectPlaneW, projectPlaneH), new THREE.MeshBasicMaterial({
+		map: this.tex,
+		antialiasing:true/*
+,
+		side: THREE.DoubleSide
+*/
+	}));
+}
