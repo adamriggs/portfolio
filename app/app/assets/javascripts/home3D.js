@@ -120,7 +120,7 @@ $(window).on("click", function(e) {
 });
 
 function onMouseDown(event_info){
-	console.log("onMouseDown()");
+	//console.log("onMouseDown()");
 	event_info.preventDefault();
 	
 	var planeClick = false;
@@ -309,8 +309,8 @@ function initInfoCard(){
 	
 	scene.add(infoCard.mesh);
 	
-	infoCard.mesh.position.x = -200;
-	infoCard.mesh.position.y = 30;
+	infoCard.mesh.position.x = -100;
+	infoCard.mesh.position.y = -10;
 	infoCard.mesh.position.z = 100;
 }
 
@@ -443,8 +443,8 @@ function ProjectPlane(texPath, data){
 }
 
 function InfoCard(){
-	var cardW = 300;
-	var cardH = 200;
+	var cardW = 500;
+	var cardH = 300;
 	this.textX = 20;
 	this.textY = 20;
 	//var text = "hello world";
@@ -455,16 +455,19 @@ function InfoCard(){
 	
 	var context = bitmap.getContext('2d');
 	context.globalAlpha = .3;
-	context.fillStyle = "0xFFCC00";
+	context.fillStyle = "0x000000";
 	context.fillRect(0,0,cardW,cardH);
 	context.globalAlpha = 1;
-	context.font = 'Bold 20px Arial';
-	context.fillStyle = 'blue';
+	context.font = '20px Arial';
+	context.textAlign = "start";
+	context.textBaseLine = "bottom";
+	context.fillStyle = "0xFFFFFF";
 	context.fillText("hello world", this.textX, this.textY);	
 	
 	// canvas contents will be used for a texture
 	var tex = new THREE.Texture(bitmap);
 	
+	//create the material for the mesh
 	var mat = new THREE.MeshBasicMaterial({
 		map: tex,
 		antialiasing:true,
@@ -472,33 +475,23 @@ function InfoCard(){
 		color:0x000000
 	});
 	
-	//this.updateText("hello world");
-	
+	//chreate the mesh and set some properties
 	this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(cardW, cardH), mat);
 	mat.opacity = .9;
 	mat.needsUpdate = true;
 	tex.needsUpdate = true;
 	
-/*
-	this.clearInfoCard = function(){
-		context.clearRect(0, 0, cardW, cardH);
-		context.globalAlpha = .3;
-		context.fillStyle = "0xFFCC00";
-		context.fillRect(0,0,cardW,cardH);
-		context.globalAlpha = 1;
-	}
-*/
-	
+	//update the text on the texture
 	this.updateText = function(text){
-		console.log("text=="+text);
+		//console.log("text=="+text);
 		context.clearRect(0, 0, cardW, cardH);
 		context.globalAlpha = .3;
-		context.fillStyle = "0xFFCC00";
+		context.fillStyle = "0x000000";
 		context.fillRect(0,0,cardW,cardH);
 		context.globalAlpha = 1;
 		
-		context.font = 'Bold 20px Arial';
-		context.fillStyle = 'white';
+		context.font = '20px Arial';
+		context.fillStyle = "0xffffff";
 		context.fillText(text, this.textX, this.textY);
 		
 		tex = new THREE.Texture(bitmap);
@@ -507,11 +500,10 @@ function InfoCard(){
 		tex.needsUpdate = true;
 	}
 	
+	//format the text on for the texture
 	this.switchProjects = function(data){
 		this.updateText(data.title);
 	}
-	
-	//infoCard.updateText('adam');
 }
 
 //************************
