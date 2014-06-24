@@ -445,6 +445,8 @@ function ProjectPlane(texPath, data){
 function InfoCard(){
 	var cardW = 500;
 	var cardH = 300;
+	var font = '20px Helvetica';
+	
 	this.textX = 20;
 	this.textY = 20;
 	//var text = "hello world";
@@ -455,14 +457,14 @@ function InfoCard(){
 	
 	var context = bitmap.getContext('2d');
 	context.globalAlpha = .3;
-	context.fillStyle = "0x000000";
-	context.fillRect(0,0,cardW,cardH);
+	context.fillStyle = '#000000';
+	context.fillRect(0, 0, cardW, cardH);
 	context.globalAlpha = 1;
-	context.font = '20px Arial';
-	context.textAlign = "start";
+	
+	context.fillStyle = '#ffffff';
+	context.font = font;
 	context.textBaseLine = "bottom";
-	context.fillStyle = "0xFFFFFF";
-	context.fillText("hello world", this.textX, this.textY);	
+	context.fillText("hello world", this.textX, this.textY);
 	
 	// canvas contents will be used for a texture
 	var tex = new THREE.Texture(bitmap);
@@ -471,8 +473,7 @@ function InfoCard(){
 	var mat = new THREE.MeshBasicMaterial({
 		map: tex,
 		antialiasing:true,
-		transparent:true,
-		color:0x000000
+		transparent:true
 	});
 	
 	//chreate the mesh and set some properties
@@ -486,12 +487,13 @@ function InfoCard(){
 		//console.log("text=="+text);
 		context.clearRect(0, 0, cardW, cardH);
 		context.globalAlpha = .3;
-		context.fillStyle = "0x000000";
-		context.fillRect(0,0,cardW,cardH);
+		context.fillStyle = '#000000';
+		context.fillRect(0, 0, cardW, cardH);
 		context.globalAlpha = 1;
 		
-		context.font = '20px Arial';
-		context.fillStyle = "0xffffff";
+		context.fillStyle = '#ffffff';
+		context.font = font;
+		context.textBaseLine = "bottom";
 		context.fillText(text, this.textX, this.textY);
 		
 		tex = new THREE.Texture(bitmap);
