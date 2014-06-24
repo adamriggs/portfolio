@@ -76,7 +76,7 @@ $(window).on("mousemove", function(e) {
 	mouseX = e.pageX;
 	mouseY = e.pageY;
 	
-	if(mouseX> 850 && mouseX<1050){
+	if(mouseX> 900 && mouseX<1150){
 		planesScrolling = true;
 		if(mouseY > topScrollArea_bottom){
 			//console.log("*****TOP AREA");
@@ -124,6 +124,7 @@ function onMouseDown(event_info){
 	event_info.preventDefault();
 	
 	var planeClick = false;
+	var infoCardClick = false;
 	
 	intersects = [];
 	//console.log(intersects.length);
@@ -155,6 +156,11 @@ function onMouseDown(event_info){
 	    } 
     }
     
+    var infoCardTouch = ray.intersectObject(infoCard.mesh);
+    if(infoCardTouch.length > 0){
+	    intersects = touch;
+	    infoCardClick = true;
+    }
     
     //the ray will return an array with length of 1 or greater if the mouse click
     //does touch anything
@@ -167,6 +173,10 @@ function onMouseDown(event_info){
     if(planeClick){
 	    //updateInfoCard(intersects[0].object.data);
 	    infoCard.switchProjects(intersects[0].object.data)
+    }
+    
+    if(infoCardClick){
+	    console.log("infoCardClick");
     }
 }
 
@@ -482,6 +492,12 @@ function InfoCard(){
 		context.fillStyle = '#000000';
 		context.fillRect(0, 0, cardW, cardH);
 		context.globalAlpha = 1;
+		
+		context.fillStyle = '#ffffff';
+		context.font = bodyFont;
+		context.textBaseLine = "bottom";
+		context.fillText("next >", textX+430, titleTextY);
+		context.fillText("< prev", textX+370, titleTextY);
 	}
 	
 	//apply the texture to the material
@@ -490,6 +506,7 @@ function InfoCard(){
 		mat.map = tex;
 		mat.needsUpdate = true;
 		tex.needsUpdate = true;
+		//renderer.render(scene, camera);
 	}
 	
 	function setTitle(){
@@ -547,12 +564,12 @@ function InfoCard(){
 		
 		var image = new Image();
 		image.onload = function(){
-			//console.log("image.onload()");
+			console.log("image.onload()");
 			setBody();
 			context.drawImage(image, textX, titleTextY+20, imgW, imgH);
 			var lines = getLines(context, decodeURIComponent(data.description), cardW - (textX*2), bodyFont);
 			for(var i = 0; i < lines.length; i++){
-				//console.log(i);
+				console.log(i);
 				context.fillText(lines[i], textX, bodyTextY + (i*15));
 			}
 		}
