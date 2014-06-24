@@ -443,28 +443,19 @@ function ProjectPlane(texPath, data){
 }
 
 function InfoCard(){
+	//vars
 	var cardW = 500;
 	var cardH = 300;
 	var font = '20px Helvetica';
-	
 	this.textX = 20;
 	this.textY = 20;
-	//var text = "hello world";
 	
+	//setup canvas
 	var bitmap = document.createElement('canvas');
 	bitmap.width = cardW;
 	bitmap.height = cardH;
-	
 	var context = bitmap.getContext('2d');
-	context.globalAlpha = .3;
-	context.fillStyle = '#000000';
-	context.fillRect(0, 0, cardW, cardH);
-	context.globalAlpha = 1;
-	
-	context.fillStyle = '#ffffff';
-	context.font = font;
-	context.textBaseLine = "bottom";
-	context.fillText("hello world", this.textX, this.textY);
+	clearCard();
 	
 	// canvas contents will be used for a texture
 	var tex = new THREE.Texture(bitmap);
@@ -482,20 +473,30 @@ function InfoCard(){
 	mat.needsUpdate = true;
 	tex.needsUpdate = true;
 	
-	//update the text on the texture
-	this.updateText = function(text){
-		//console.log("text=="+text);
+	//clear the card
+	function clearCard(){
 		context.clearRect(0, 0, cardW, cardH);
 		context.globalAlpha = .3;
 		context.fillStyle = '#000000';
 		context.fillRect(0, 0, cardW, cardH);
 		context.globalAlpha = 1;
+	}
+	
+	//update the text on the texture
+	this.updateText = function(text){
+		//console.log("text=="+text);
+		clearCard();
 		
 		context.fillStyle = '#ffffff';
 		context.font = font;
 		context.textBaseLine = "bottom";
 		context.fillText(text, this.textX, this.textY);
 		
+		applyTex();
+	}
+	
+	//apply the texture to the material
+	function applyTex(){
 		tex = new THREE.Texture(bitmap);
 		mat.map = tex;
 		mat.needsUpdate = true;
@@ -506,6 +507,13 @@ function InfoCard(){
 	this.switchProjects = function(data){
 		this.updateText(data.title);
 	}
+	
+	//show the about info 
+	this.showAbout = function(){
+		this.updateText('Adam Riggs');
+	}
+	
+	this.showAbout();
 }
 
 //************************
