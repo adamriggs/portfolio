@@ -310,7 +310,7 @@ function initInfoCard(){
 	scene.add(infoCard.mesh);
 	
 	infoCard.mesh.position.x = -100;
-	infoCard.mesh.position.y = -10;
+	infoCard.mesh.position.y = -50;
 	infoCard.mesh.position.z = 100;
 }
 
@@ -445,10 +445,12 @@ function ProjectPlane(texPath, data){
 function InfoCard(){
 	//vars
 	var cardW = 500;
-	var cardH = 300;
-	var font = '20px Helvetica';
-	this.textX = 20;
-	this.textY = 20;
+	var cardH = 400;
+	var titleFont = '18px Helvetica';
+	var bodyFont = '14px Helvetica';
+	var textX = 20;
+	var titleTextY = 20;
+	var bodyTextY = 170;
 	
 	//setup canvas
 	var bitmap = document.createElement('canvas');
@@ -482,19 +484,6 @@ function InfoCard(){
 		context.globalAlpha = 1;
 	}
 	
-	//update the text on the texture
-	this.updateText = function(text){
-		//console.log("text=="+text);
-		clearCard();
-		
-		context.fillStyle = '#ffffff';
-		context.font = font;
-		context.textBaseLine = "bottom";
-		context.fillText(text, this.textX, this.textY);
-		
-		applyTex();
-	}
-	
 	//apply the texture to the material
 	function applyTex(){
 		tex = new THREE.Texture(bitmap);
@@ -503,14 +492,81 @@ function InfoCard(){
 		tex.needsUpdate = true;
 	}
 	
+	function setTitle(){
+		textX = 20;
+		textY = 20;
+		context.fillStyle = '#ffffff';
+		context.font = titleFont;
+		context.textBaseLine = "bottom";
+	}
+	
+	function setBody(){
+		textX = 20;
+		textY = 70;
+		context.fillStyle = '#ffffff';
+		context.font = bodyFont;
+		context.textBaseLine = "bottom";
+	}
+	
+	//copypasta from http://stackoverflow.com/questions/2936112/text-wrap-in-a-canvas-element
+	function getLines(ctx,phrase,maxPxLength,textStyle) {
+	    var wa=phrase.split(" "),
+	        phraseArray=[],
+	        lastPhrase=wa[0],
+	        l=maxPxLength,
+	        measure=0;
+	    ctx.font = textStyle;
+	    for (var i=1;i<wa.length;i++) {
+	        var w=wa[i];
+	        measure=ctx.measureText(lastPhrase+w).width;
+	        if (measure<l) {
+	            lastPhrase+=(" "+w);
+	        }else {
+	            phraseArray.push(lastPhrase);
+	            lastPhrase=w;
+	        }
+	        if (i===wa.length-1) {
+	            phraseArray.push(lastPhrase);
+	            break;
+	        }
+	    }
+	    
+	    return phraseArray;
+	}
+	
 	//format the text on for the texture
 	this.switchProjects = function(data){
-		this.updateText(data.title);
+		//console.log(data);
+		var imgW = cardW - (textX*2);
+		var imgH = (((cardW - (textX*2))*155)/662);	//this uses the original dimensions of the image which are 662x155
+		
+		clearCard();
+		
+		setTitle();
+		context.fillText(data.title, textX, titleTextY);
+		
+		var image = new Image();
+		image.onload = function(){
+			//console.log("image.onload()");
+			setBody();
+			context.drawImage(image, textX, titleTextY+20, imgW, imgH);
+			var lines = getLines(context, decodeURIComponent(data.description), cardW - (textX*2), bodyFont);
+			for(var i = 0; i < lines.length; i++){
+				//console.log(i);
+				context.fillText(lines[i], textX, bodyTextY + (i*15));
+			}
+		}
+		//console.log(data.thumb);
+		image.src = data.img;
+
+		
+		applyTex();
 	}
 	
 	//show the about info 
 	this.showAbout = function(){
-		this.updateText('Adam Riggs');
+		setTitle();
+		context.fillText('Adam Riggs', textX, textY);
 	}
 	
 	this.showAbout();
