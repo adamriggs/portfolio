@@ -156,9 +156,9 @@ function onMouseDown(event_info){
 	    } 
     }
     
-    var infoCardTouch = ray.intersectObject(infoCard.mesh);
+    var infoCardTouch = ray.intersectObject(infoCard.mesh, true);
     if(infoCardTouch.length > 0){
-	    intersects = touch;
+	    intersects = infoCardTouch;
 	    infoCardClick = true;
     }
     
@@ -177,6 +177,7 @@ function onMouseDown(event_info){
     
     if(infoCardClick){
 	    console.log("infoCardClick");
+	    infoCard.onClick(intersects[0].point);
     }
 }
 
@@ -586,6 +587,26 @@ function InfoCard(){
 		context.fillText('Adam Riggs', textX, textY);
 	}
 	
+	this.onClick = function(vector){
+		//console.log(vector);
+		
+		//next button
+		if(vector.x > 100 && vector.x < 150 && vector.y < 150 && vector.y > 120){
+			//next x ranges from 100 to 150
+			//next y ranges from 150 to 120
+			console.log('next click');
+		}
+		
+		//prev button
+		if(vector.x > 40 && vector.x < 85 && vector.y < 150 && vector.y > 120){
+			//prev x ranges from 40 to 85
+			//prev y ranges from 150 to 120
+			console.log('prev click');
+		}
+		
+	}
+	
+	//after all the functions, variables, and states are initialized - put the infoCard in it's initial state
 	this.showAbout();
 }
 
