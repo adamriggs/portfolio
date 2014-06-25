@@ -218,11 +218,30 @@ function init() {
 	
 	container.appendChild(renderer.domElement);
 	
+	initImages();
 	initEvents();
 	initScene();
 	initLight();
 
 	animate();
+}
+
+function initImages(){
+	for(var i = 0; i < projectArray.length; i++){
+		projectArray[i].imgObj = new Image();
+		projectArray[i].imgObj.src = projectArray[i].img;
+		
+		/*
+var image = new Image();
+		image.onload = function(){
+			//console.log("image.onload()");
+			context.drawImage(image, textX, titleTextY+20, imgW, imgH);
+			
+		}
+		//console.log(data.thumb);
+		image.src = data.img;
+*/
+	}
 }
 
 function initEvents(){
@@ -586,6 +605,8 @@ function InfoCard(){
 		setTitle();
 		context.fillText(data.title, textX, titleTextY);
 		
+		context.drawImage(data.imgObj, textX, titleTextY+20, imgW, imgH);
+		
 		setBody();
 		var lines = getLines(context, decodeURIComponent(data.description), cardW - (textX*2), bodyFont);
 		for(var i = 0; i < lines.length; i++){
@@ -593,7 +614,8 @@ function InfoCard(){
 			context.fillText(lines[i], textX, bodyTextY + (i*15));
 		}
 		
-		var image = new Image();
+		/*
+var image = new Image();
 		image.onload = function(){
 			//console.log("image.onload()");
 			context.drawImage(image, textX, titleTextY+20, imgW, imgH);
@@ -601,6 +623,7 @@ function InfoCard(){
 		}
 		//console.log(data.thumb);
 		image.src = data.img;
+*/
 
 		
 		applyTex();
@@ -655,6 +678,10 @@ function InfoCard(){
 	
 	//after all the functions, variables, and states are initialized - put the infoCard in it's initial state
 	this.showAbout();
+}
+
+function InfoCardControls(){
+	
 }
 
 //************************
