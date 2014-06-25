@@ -78,7 +78,7 @@ $(window).on("mousemove", function(e) {
 	mouseX = e.pageX;
 	mouseY = e.pageY;
 	
-	if(mouseX> 900 && mouseX<1150){
+	if(mouseX > 900 && mouseX < 1150 && planesAdvance===false){
 		planesScrolling = true;
 		if(mouseY > topScrollArea_bottom){
 			//console.log("*****TOP AREA");
@@ -176,6 +176,8 @@ function onMouseDown(event_info){
     if(planeClick){
 	    //updateInfoCard(intersects[0].object.data);
 	    infoCard.switchProjects(intersects[0].object.data, planeIndex);
+	    planesAdvance = true;
+	    planesAdvanceIndex = planeIndex;
     }
     
     if(infoCardClick){
@@ -422,7 +424,7 @@ function animate() {
 		}
 		
 		if(planesAdvance){
-			//planesScrolling = false;
+			planesScrolling = false;
 			//scrollToPlane(planesAdvanceIndex);
 			
 			if(projectPlaneArray[planesAdvanceIndex].mesh.position.y>0){
