@@ -614,18 +614,6 @@ function InfoCard(){
 			context.fillText(lines[i], textX, bodyTextY + (i*15));
 		}
 		
-		/*
-var image = new Image();
-		image.onload = function(){
-			//console.log("image.onload()");
-			context.drawImage(image, textX, titleTextY+20, imgW, imgH);
-			
-		}
-		//console.log(data.thumb);
-		image.src = data.img;
-*/
-
-		
 		applyTex();
 	}
 	
@@ -681,6 +669,53 @@ var image = new Image();
 }
 
 function InfoCardControls(){
+	//make the mesh, geometry, material, and texture for both buttons
+	
+	//setup canvas
+	var bmpAbout = document.createElement('canvas');
+	bmpAbout.width = cardW;
+	bmpAbout.height = cardH;
+	var context = bmpAbout.getContext('2d');
+	
+	// canvas contents will be used for a texture
+	var texAbout = new THREE.Texture(bmpAbout);
+	
+	//create the material for the mesh
+	var matAbout = new THREE.MeshBasicMaterial({
+		map: texAbout,
+		antialiasing:true,
+		transparent:true
+	});
+	
+	//chreate the mesh and set some properties
+	this.meshAbout = new THREE.Mesh(new THREE.PlaneGeometry(cardW, cardH), matAbout);
+	matAbout.opacity = .9;
+	matAbout.needsUpdate = true;
+	texAbout.needsUpdate = true;
+	
+	
+	//setup canvas
+	var bmpPortfolio = document.createElement('canvas');
+	bmpPortfolio.width = cardW;
+	bmpPortfolio.height = cardH;
+	var context = bmpPortfolio.getContext('2d');
+	
+	// canvas contents will be used for a texture
+	var texPortfolio = new THREE.Texture(bmpPortfolio);
+	
+	//create the material for the mesh
+	var matPortfolio = new THREE.MeshBasicMaterial({
+		map: texPortfolio,
+		antialiasing:true,
+		transparent:true
+	});
+	
+	//chreate the mesh and set some properties
+	this.meshPortfolio = new THREE.Mesh(new THREE.PlaneGeometry(cardW, cardH), matPortfolio);
+	matPortfolio.opacity = .9;
+	matPortfolio.needsUpdate = true;
+	texPortfolio.needsUpdate = true;
+	
 	
 }
 
