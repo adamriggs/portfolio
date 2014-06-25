@@ -26,6 +26,8 @@ var animationComplete = true;
 
 var mouseOver = true;
 var planesScrolling = false;
+var planesAdvance = false;
+var planesAdvanceIndex = -1;
 var planeRate = 0;
 
 var projector;
@@ -124,6 +126,7 @@ function onMouseDown(event_info){
 	event_info.preventDefault();
 	
 	var planeClick = false;
+	var planeIndex = -1;
 	var infoCardClick = false;
 	
 	intersects = [];
@@ -149,10 +152,10 @@ function onMouseDown(event_info){
     var i=0;
     for(i=0; i<len; i++){
     	var touch = ray.intersectObject(projectPlaneArray[i].mesh);
-    	//console.log(i + "==" + touch.toString());
     	if(touch.length > 0){
 	    	intersects = touch;
 	    	planeClick = true;
+	    	planeIndex = i;
 	    } 
     }
     
@@ -172,11 +175,11 @@ function onMouseDown(event_info){
     
     if(planeClick){
 	    //updateInfoCard(intersects[0].object.data);
-	    infoCard.switchProjects(intersects[0].object.data)
+	    infoCard.switchProjects(intersects[0].object.data, planeIndex);
     }
     
     if(infoCardClick){
-	    console.log("infoCardClick");
+	    //console.log("infoCardClick");
 	    infoCard.onClick(intersects[0].point);
     }
 }
@@ -378,11 +381,6 @@ function scrollPlanes(){
 	//console.log("projectPlaneArray[len-1].position.y=="+projectPlaneArray[len-1].position.y);
 }
 
-function scrollToPlane(id){
-	
-	
-}
-
 function moveCamera(){
 	//move the camera
 	camera.position.x = mouseX - ($(window).width())/2;
@@ -419,6 +417,27 @@ function animate() {
 		render();
 		
 		if(planesScrolling){
+			//planesAdvance = false;
+			scrollPlanes();
+		}
+		
+		if(planesAdvance){
+			//planesScrolling = false;
+			//scrollToPlane(planesAdvanceIndex);
+			
+			if(projectPlaneArray[planesAdvanceIndex].mesh.position.y>0){
+				//console.log("y>0");
+				planeRate = 10;
+			}
+			
+			if(projectPlaneArray[planesAdvanceIndex].mesh.position.y<0) {
+				planeRate = -10;
+			} 
+			
+			if(projectPlaneArray[planesAdvanceIndex].mesh.position.y < 10 && projectPlaneArray[planesAdvanceIndex].mesh.position.y > -10){
+				planesAdvance = false;
+			}
+			
 			scrollPlanes();
 		}
 	}
@@ -462,6 +481,7 @@ function InfoCard(){
 	var textX = 20;
 	var titleTextY = 20;
 	var bodyTextY = 170;
+	var planeIndex = -1;
 	
 	//setup canvas
 	var bitmap = document.createElement('canvas');
@@ -553,8 +573,9 @@ function InfoCard(){
 	}
 	
 	//format the text on for the texture
-	this.switchProjects = function(data){
-		//console.log(data);
+	this.switchProjects = function(data, index){
+		planeIndex = index;
+		
 		var imgW = cardW - (textX*2);
 		var imgH = (((cardW - (textX*2))*155)/662);	//this uses the original dimensions of the image which are 662x155
 		
@@ -563,16 +584,18 @@ function InfoCard(){
 		setTitle();
 		context.fillText(data.title, textX, titleTextY);
 		
+		setBody();
+		var lines = getLines(context, decodeURIComponent(data.description), cardW - (textX*2), bodyFont);
+		for(var i = 0; i < lines.length; i++){
+			//console.log(i);
+			context.fillText(lines[i], textX, bodyTextY + (i*15));
+		}
+		
 		var image = new Image();
 		image.onload = function(){
-			console.log("image.onload()");
-			setBody();
+			//console.log("image.onload()");
 			context.drawImage(image, textX, titleTextY+20, imgW, imgH);
-			var lines = getLines(context, decodeURIComponent(data.description), cardW - (textX*2), bodyFont);
-			for(var i = 0; i < lines.length; i++){
-				console.log(i);
-				context.fillText(lines[i], textX, bodyTextY + (i*15));
-			}
+			
 		}
 		//console.log(data.thumb);
 		image.src = data.img;
@@ -594,14 +617,36 @@ function InfoCard(){
 		if(vector.x > 100 && vector.x < 150 && vector.y < 150 && vector.y > 120){
 			//next x ranges from 100 to 150
 			//next y ranges from 150 to 120
-			console.log('next click');
+			//console.log('next click');
+			
+			if(planeIndex+1 < projectArray.length){
+				planeIndex++;
+			} else {
+				planeIndex=0;
+			}
+			
+			this.switchProjects(projectArray[planeIndex], planeIndex);
+			planesAdvance = true;
+			planesAdvanceIndex = planeIndex;
+			//scrollToPlane(planeIndex);
 		}
 		
 		//prev button
 		if(vector.x > 40 && vector.x < 85 && vector.y < 150 && vector.y > 120){
 			//prev x ranges from 40 to 85
 			//prev y ranges from 150 to 120
-			console.log('prev click');
+			//console.log('prev click');
+			
+			if(planeIndex-1 >= 0){
+				planeIndex--;
+			} else {
+				planeIndex = projectArray.length-1;
+			}
+			
+			this.switchProjects(projectArray[planeIndex], planeIndex);
+			planesAdvance = true;
+			planesAdvanceIndex = planeIndex;
+			//scrollToPlane(planeIndex);
 		}
 		
 	}
