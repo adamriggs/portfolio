@@ -784,59 +784,42 @@ function InfoCardControls(){
 		
 		return ctx;
 	}
-	
-	function aboutFocus(){
-		ctxAbout = focusBkg(ctxAbout);
-		ctxAbout.fillText("About", textX, textY);
-		applyAboutTex();
+		
+	function focus(ctx, txt, tex, mat, bmp){
+		ctx = focusBkg(ctx);
+		ctx.fillText(txt, textX, textY);
+		applyTex(tex, mat, bmp);
 	}
 	
-	function aboutBlur(){
-		ctxAbout = blurBkg(ctxAbout);
-		ctxAbout.fillText("About", textX, textY);
-		applyAboutTex();
+	function blur(ctx, txt, tex, mat, bmp){
+		ctx = blurBkg(ctx);
+		ctx.fillText(txt, textX, textY);
+		applyTex(tex, mat, bmp);
 	}
 	
-	function portfolioFocus(){
-		ctxPortfolio = focusBkg(ctxPortfolio);
-		ctxPortfolio.fillText("Portfolio", textX, textY);
-		applyPortfolioTex();
+	function applyTex(tex, mat, bmp){
+		tex = new THREE.Texture(bmp);
+		mat.map = tex;
+		mat.needsUpdate = true;
+		tex.needsUpdate = true;	
 	}
-	
-	function portfolioBlur(){
-		ctxPortfolio = blurBkg(ctxPortfolio);
-		ctxPortfolio.fillText("Portfolio", textX, textY);
-		applyPortfolioTex();
-	}
-	
-	function applyAboutTex(){
-		texAbout = new THREE.Texture(bmpAbout);
-		matAbout.map = texAbout;
-		matAbout.needsUpdate = true;
-		texAbout.needsUpdate = true;
-		//renderer.render(scene, camera);
-	}
-	
-	function applyPortfolioTex(){
-		texPortfolio = new THREE.Texture(bmpPortfolio);
-		matPortfolio.map = texPortfolio;
-		matPortfolio.needsUpdate = true;
-		texPortfolio.needsUpdate = true;
-		//renderer.render(scene, camera);
-	}
-	
+		
 	this.onClick = function(type){
 		//console.log('infoCardControls.onClick()');
 		if(type==='about'){
 			//console.log('about');
-			aboutFocus();
-			portfolioBlur();
+			//aboutFocus();
+			//portfolioBlur();
+			focus(ctxAbout, 'About', texAbout, matAbout, bmpAbout);
+			blur(ctxPortfolio, 'Portfolio', texPortfolio, matPortfolio, bmpPortfolio);
 		}
 		
 		if(type==='portfolio'){
 			//console.log('portfolio');
-			aboutBlur();
-			portfolioFocus();
+			//aboutBlur();
+			//portfolioFocus();
+			blur(ctxAbout, 'About', texAbout, matAbout, bmpAbout);
+			focus(ctxPortfolio, 'Portfolio', texPortfolio, matPortfolio, bmpPortfolio);
 		}
 		
 	}
