@@ -490,15 +490,16 @@ function animate() {
 				planeRate = 10;
 			}
 			
-			if(projectPlaneArray[planesAdvanceIndex].mesh.position.y<0) {
+			if(projectPlaneArray[planesAdvanceIndex].mesh.position.y<0){
 				planeRate = -10;
 			} 
 			
+			
 			if(projectPlaneArray[planesAdvanceIndex].mesh.position.y < 10 && projectPlaneArray[planesAdvanceIndex].mesh.position.y > -10){
 				planesAdvance = false;
+			} else {
+				scrollPlanes();
 			}
-			
-			scrollPlanes();
 		}
 	}
 }
@@ -658,8 +659,11 @@ function InfoCard(){
 	
 	//show the about info 
 	this.showAbout = function(){
+		//console.log('infoCard.showAbout()');
+		clearCard();
 		setTitle();
-		context.fillText('Adam Riggs', textX, textY);
+		context.fillText('Experience', textX, textY);
+		applyTex();
 	}
 	
 	this.onClick = function(vector){
@@ -681,6 +685,8 @@ function InfoCard(){
 			planesAdvance = true;
 			planesAdvanceIndex = planeIndex;
 			//scrollToPlane(planeIndex);
+			
+			infoCardControls.onClick('portfolio');
 		}
 		
 		//prev button
@@ -699,6 +705,8 @@ function InfoCard(){
 			planesAdvance = true;
 			planesAdvanceIndex = planeIndex;
 			//scrollToPlane(planeIndex);
+			
+			infoCardControls.onClick('portfolio');
 		}
 		
 	}
@@ -812,6 +820,7 @@ function InfoCardControls(){
 			//portfolioBlur();
 			focus(ctxAbout, 'About', texAbout, matAbout, bmpAbout);
 			blur(ctxPortfolio, 'Portfolio', texPortfolio, matPortfolio, bmpPortfolio);
+			infoCard.showAbout();
 		}
 		
 		if(type==='portfolio'){
@@ -820,12 +829,15 @@ function InfoCardControls(){
 			//portfolioFocus();
 			blur(ctxAbout, 'About', texAbout, matAbout, bmpAbout);
 			focus(ctxPortfolio, 'Portfolio', texPortfolio, matPortfolio, bmpPortfolio);
+			if(planesAdvanceIndex===-1){planesAdvanceIndex=0;}
+			infoCard.switchProjects(projectArray[planesAdvanceIndex], planesAdvanceIndex);
+			planesAdvance = true;
 		}
 		
 	}
 	
-	aboutFocus();
-	portfolioBlur();
+	focus(ctxAbout, 'About', texAbout, matAbout, bmpAbout);
+	blur(ctxPortfolio, 'Portfolio', texPortfolio, matPortfolio, bmpPortfolio);
 	
 }
 
