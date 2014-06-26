@@ -86,12 +86,14 @@ $(window).on("mousemove", function(e) {
 			planeRate*=-1;
 			if(planeRate < -10){planeRate = -10;}
 			//console.log("planeRate=="+planeRate);
-		}
-		if(mouseY < bottomScrollArea_top){
+		}else if(mouseY < bottomScrollArea_top){
 			//console.log("*****BOTTOM AREA");
 			planeRate = bottomScrollArea_top / mouseY;
 			if(planeRate > 10){planeRate = 10;}
 			//console.log("planeRate=="+planeRate);
+		} else {
+			planesScrolling = false;
+			planeRate = 0;
 		}
 	} else {
 		planesScrolling = false;
@@ -675,7 +677,8 @@ function InfoCardControls(){
 	var bmpAbout = document.createElement('canvas');
 	bmpAbout.width = cardW;
 	bmpAbout.height = cardH;
-	var context = bmpAbout.getContext('2d');
+	var ctxAbout = bmpAbout.getContext('2d');
+	
 	
 	// canvas contents will be used for a texture
 	var texAbout = new THREE.Texture(bmpAbout);
@@ -698,7 +701,7 @@ function InfoCardControls(){
 	var bmpPortfolio = document.createElement('canvas');
 	bmpPortfolio.width = cardW;
 	bmpPortfolio.height = cardH;
-	var context = bmpPortfolio.getContext('2d');
+	var ctxPortfolio = bmpPortfolio.getContext('2d');
 	
 	// canvas contents will be used for a texture
 	var texPortfolio = new THREE.Texture(bmpPortfolio);
@@ -716,6 +719,45 @@ function InfoCardControls(){
 	matPortfolio.needsUpdate = true;
 	texPortfolio.needsUpdate = true;
 	
+	function focusBkg(ctx){
+		ctx.clearRect(0, 0, cardW, cardH);
+		ctx.globalAlpha = .3;
+		ctx.fillStyle = '#000000';
+		ctx.fillRect(0, 0, cardW, cardH);
+		ctx.globalAlpha = 1;
+		
+		return ctx;
+	}
+	
+	function blurBkg(ctx){
+		ctx.clearRect(0, 0, cardW, cardH);
+		ctx.globalAlpha = .5;
+		ctx.fillStyle = '#000000';
+		ctx.fillRect(0, 0, cardW, cardH);
+		ctx.globalAlpha = 1;
+		
+		return ctx;
+	}
+	
+	this.aboutFocus = function(){
+		ctxAbout = focusBkg(ctxAbout);
+		
+	}
+	
+	this.aboutBlur = function(){
+		ctxAbout = blurBkg(ctxAbout);
+		
+	}
+	
+	this.portfolioFocus = function(){
+		ctxPortfolio = focusBkg(ctxPortfolio);
+		
+	}
+	
+	this.portfolioBlur = function(){
+		ctxPortfolio = blurBkg(ctxPortfolio);
+		
+	}
 	
 }
 
