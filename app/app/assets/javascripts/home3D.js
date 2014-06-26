@@ -349,6 +349,20 @@ function initInfoCard(){
 	infoCard.mesh.position.x = -100;
 	infoCard.mesh.position.y = -50;
 	infoCard.mesh.position.z = 100;
+	
+	infoCardControls = new InfoCardControls();
+	
+	scene.add(infoCardControls.meshAbout);
+	scene.add(infoCardControls.meshPortfolio);
+	
+	infoCardControls.meshAbout.position.x = -325;
+	infoCardControls.meshAbout.position.y = 160;
+	infoCardControls.meshAbout.position.z = 100;
+	
+	infoCardControls.meshPortfolio.position.x = -275;
+	infoCardControls.meshPortfolio.position.y = 160;
+	infoCardControls.meshPortfolio.position.z = 100;
+	
 }
 
 function initLight() {
@@ -672,11 +686,13 @@ function InfoCard(){
 
 function InfoCardControls(){
 	//make the mesh, geometry, material, and texture for both buttons
+	var btnW = 50;
+	var btnH = 20;
 	
 	//setup canvas
 	var bmpAbout = document.createElement('canvas');
-	bmpAbout.width = cardW;
-	bmpAbout.height = cardH;
+	bmpAbout.width = btnW;
+	bmpAbout.height = btnH;
 	var ctxAbout = bmpAbout.getContext('2d');
 	
 	
@@ -691,7 +707,7 @@ function InfoCardControls(){
 	});
 	
 	//chreate the mesh and set some properties
-	this.meshAbout = new THREE.Mesh(new THREE.PlaneGeometry(cardW, cardH), matAbout);
+	this.meshAbout = new THREE.Mesh(new THREE.PlaneGeometry(btnW, btnH), matAbout);
 	matAbout.opacity = .9;
 	matAbout.needsUpdate = true;
 	texAbout.needsUpdate = true;
@@ -699,8 +715,8 @@ function InfoCardControls(){
 	
 	//setup canvas
 	var bmpPortfolio = document.createElement('canvas');
-	bmpPortfolio.width = cardW;
-	bmpPortfolio.height = cardH;
+	bmpPortfolio.width = btnW;
+	bmpPortfolio.height = btnH;
 	var ctxPortfolio = bmpPortfolio.getContext('2d');
 	
 	// canvas contents will be used for a texture
@@ -714,26 +730,26 @@ function InfoCardControls(){
 	});
 	
 	//chreate the mesh and set some properties
-	this.meshPortfolio = new THREE.Mesh(new THREE.PlaneGeometry(cardW, cardH), matPortfolio);
+	this.meshPortfolio = new THREE.Mesh(new THREE.PlaneGeometry(btnW, btnH), matPortfolio);
 	matPortfolio.opacity = .9;
 	matPortfolio.needsUpdate = true;
 	texPortfolio.needsUpdate = true;
 	
 	function focusBkg(ctx){
-		ctx.clearRect(0, 0, cardW, cardH);
+		ctx.clearRect(0, 0, btnW, btnH);
 		ctx.globalAlpha = .3;
 		ctx.fillStyle = '#000000';
-		ctx.fillRect(0, 0, cardW, cardH);
+		ctx.fillRect(0, 0, btnW, btnH);
 		ctx.globalAlpha = 1;
 		
 		return ctx;
 	}
 	
 	function blurBkg(ctx){
-		ctx.clearRect(0, 0, cardW, cardH);
+		ctx.clearRect(0, 0, btnW, btnH);
 		ctx.globalAlpha = .5;
 		ctx.fillStyle = '#000000';
-		ctx.fillRect(0, 0, cardW, cardH);
+		ctx.fillRect(0, 0, btnW, btnH);
 		ctx.globalAlpha = 1;
 		
 		return ctx;
@@ -758,6 +774,9 @@ function InfoCardControls(){
 		ctxPortfolio = blurBkg(ctxPortfolio);
 		
 	}
+	
+	this.aboutFocus();
+	this.portfolioBlur();
 	
 }
 
