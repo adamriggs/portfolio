@@ -130,6 +130,8 @@ function onMouseDown(event_info){
 	var planeClick = false;
 	var planeIndex = -1;
 	var infoCardClick = false;
+	var infoCardControlsAboutClick = false;
+	var infoCardControlsPortfolioClick = false;
 	
 	intersects = [];
 	//console.log(intersects.length);
@@ -167,6 +169,19 @@ function onMouseDown(event_info){
 	    infoCardClick = true;
     }
     
+    var infoCardControlsAboutTouch = ray.intersectObject(infoCardControls.meshAbout, true);
+    if(infoCardControlsAboutTouch.length > 0){
+	    intersects = infoCardControlsAboutTouch;
+	    infoCardControlsAboutClick = true;
+    }
+    
+    var infoCardControlsPortfolioTouch = ray.intersectObject(infoCardControls.meshPortfolio, true);
+    if(infoCardControlsPortfolioTouch.length > 0){
+	    intersects = infoCardControlsPortfolioTouch;
+	    infoCardControlsPortfolioClick = true;
+    }
+
+    
     //the ray will return an array with length of 1 or greater if the mouse click
     //does touch anything
     if( intersects.length>0) {
@@ -185,6 +200,14 @@ function onMouseDown(event_info){
     if(infoCardClick){
 	    //console.log("infoCardClick");
 	    infoCard.onClick(intersects[0].point);
+    }
+    
+    if(infoCardControlsAboutClick){
+	    infoCardControls.onClick('about');
+    }
+    
+    if(infoCardControlsPortfolioClick){
+	    infoCardControls.onClick('portfolio');
     }
 }
 
@@ -355,11 +378,11 @@ function initInfoCard(){
 	scene.add(infoCardControls.meshAbout);
 	scene.add(infoCardControls.meshPortfolio);
 	
-	infoCardControls.meshAbout.position.x = -325;
+	infoCardControls.meshAbout.position.x = -312;
 	infoCardControls.meshAbout.position.y = 160;
 	infoCardControls.meshAbout.position.z = 100;
 	
-	infoCardControls.meshPortfolio.position.x = -275;
+	infoCardControls.meshPortfolio.position.x = -238;
 	infoCardControls.meshPortfolio.position.y = 160;
 	infoCardControls.meshPortfolio.position.z = 100;
 	
@@ -686,8 +709,11 @@ function InfoCard(){
 
 function InfoCardControls(){
 	//make the mesh, geometry, material, and texture for both buttons
-	var btnW = 50;
+	var btnW = 75;
 	var btnH = 20;
+	var textX = 15;
+	var textY = 15;
+	var font = '12px Helvetica'
 	
 	//setup canvas
 	var bmpAbout = document.createElement('canvas');
@@ -741,6 +767,8 @@ function InfoCardControls(){
 		ctx.fillStyle = '#000000';
 		ctx.fillRect(0, 0, btnW, btnH);
 		ctx.globalAlpha = 1;
+		ctx.fillStyle = '#ffffff';
+		ctx.font = font;
 		
 		return ctx;
 	}
@@ -751,32 +779,70 @@ function InfoCardControls(){
 		ctx.fillStyle = '#000000';
 		ctx.fillRect(0, 0, btnW, btnH);
 		ctx.globalAlpha = 1;
+		ctx.fillStyle = '#ffffff';
+		ctx.font = font;
 		
 		return ctx;
 	}
 	
-	this.aboutFocus = function(){
+	function aboutFocus(){
 		ctxAbout = focusBkg(ctxAbout);
-		
+		ctxAbout.fillText("About", textX, textY);
+		applyAboutTex();
 	}
 	
-	this.aboutBlur = function(){
+	function aboutBlur(){
 		ctxAbout = blurBkg(ctxAbout);
-		
+		ctxAbout.fillText("About", textX, textY);
+		applyAboutTex();
 	}
 	
-	this.portfolioFocus = function(){
+	function portfolioFocus(){
 		ctxPortfolio = focusBkg(ctxPortfolio);
-		
+		ctxPortfolio.fillText("Portfolio", textX, textY);
+		applyPortfolioTex();
 	}
 	
-	this.portfolioBlur = function(){
+	function portfolioBlur(){
 		ctxPortfolio = blurBkg(ctxPortfolio);
+		ctxPortfolio.fillText("Portfolio", textX, textY);
+		applyPortfolioTex();
+	}
+	
+	function applyAboutTex(){
+		texAbout = new THREE.Texture(bmpAbout);
+		matAbout.map = texAbout;
+		matAbout.needsUpdate = true;
+		texAbout.needsUpdate = true;
+		//renderer.render(scene, camera);
+	}
+	
+	function applyPortfolioTex(){
+		texPortfolio = new THREE.Texture(bmpPortfolio);
+		matPortfolio.map = texPortfolio;
+		matPortfolio.needsUpdate = true;
+		texPortfolio.needsUpdate = true;
+		//renderer.render(scene, camera);
+	}
+	
+	this.onClick = function(type){
+		//console.log('infoCardControls.onClick()');
+		if(type==='about'){
+			//console.log('about');
+			aboutFocus();
+			portfolioBlur();
+		}
+		
+		if(type==='portfolio'){
+			//console.log('portfolio');
+			aboutBlur();
+			portfolioFocus();
+		}
 		
 	}
 	
-	this.aboutFocus();
-	this.portfolioBlur();
+	aboutFocus();
+	portfolioBlur();
 	
 }
 
