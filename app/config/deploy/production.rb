@@ -20,7 +20,7 @@ set :branch, "master"
 
 set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
 set :server_name, "www.onosen.com onosen.com"
-set :bundle_gemfile,  "app/Gemfile"
+# set :bundle_gemfile,  "app/Gemfile"
 
 server '96.126.98.106', user: 'deploy', roles: %w{app web db}, primary: true
 
