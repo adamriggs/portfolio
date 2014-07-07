@@ -4,11 +4,11 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.0'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# gem 'sqlite3'
 # Use mysql2 as the database for Active Record
-#gem 'mysql'
-gem 'mysql2' #, :git => 'git://github.com/brianmario/mysql2.git'
+# gem 'mysql'
 gem 'mysql', '2.9.1'
+gem 'mysql2' #, :git => 'git://github.com/brianmario/mysql2.git'
 gem 'activerecord-mysql-adapter'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
@@ -45,7 +45,7 @@ gem 'rake'
 # gem 'capistrano-rvm'
  
 group :development do
-  gem 'capistrano', '~> 3.0.0'
+  gem 'capistrano', '~> 3.0'
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
   gem 'capistrano-rvm'
