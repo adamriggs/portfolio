@@ -8,6 +8,7 @@ gem 'sqlite3'
 # Use mysql2 as the database for Active Record
 #gem 'mysql'
 gem 'mysql2' #, :git => 'git://github.com/brianmario/mysql2.git'
+gem install mysql -v '2.9.1'
 gem 'activerecord-mysql-adapter'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
@@ -36,8 +37,19 @@ gem 'spring',        group: :development
 # Use unicorn as the app server
 # gem 'unicorn'
 
+# Be sure to include rake in your Gemfile
+gem 'rake'
+ 
 # Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+gem 'capistrano', '~> 3.0', require: false, group: :development
+gem 'capistrano-rvm'
+ 
+group :development do
+  gem 'capistrano', '~> 3.0.0'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rvm'
+end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
