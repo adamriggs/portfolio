@@ -88,6 +88,16 @@ namespace :deploy do
 	#after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
 # 	after :finishing, 'deploy:cleanup'
 
+	task :precompile do
+      on roles :web do
+        within release_path do
+          with rails_env: fetch(:rails_env) do
+            execute :bundle, "exec rake assets:precompile"
+          end
+        end
+      end
+    end
+
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
