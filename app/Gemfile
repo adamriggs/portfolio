@@ -41,8 +41,8 @@ gem 'spring',        group: :development
 gem 'rake'
  
 # Use Capistrano for deployment
-gem 'capistrano', '~> 3.0', require: false, group: :development
-gem 'capistrano-rvm'
+# gem 'capistrano', '~> 3.0', require: false, group: :development
+# gem 'capistrano-rvm'
  
 group :development do
   gem 'capistrano', '~> 3.0.0'
