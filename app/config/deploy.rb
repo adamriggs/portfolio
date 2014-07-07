@@ -1,5 +1,5 @@
 # Ensure that bundle is used for rake tasks
-SSHKit.config.command_map[:rake] = "bundle exec rake"
+#SSHKit.config.command_map[:rake] = "bundle exec rake"
 
 # config valid only for Capistrano 3.1
 lock '3.2.1'
@@ -33,7 +33,8 @@ set :use_sudo, false
 
 #set :rvm_ruby_version, '1.9.3-p448'
 set :default_env, { rvm_bin_path: '~/.rvm/bin' }
-SSHKit.config.command_map[:rake] = "#{fetch(:default_env)[:rvm_bin_path]}/rvm ruby-#{fetch(:rvm_ruby_version)} bundle exec rake assets:precompile"
+#SSHKit.config.command_map[:rake] = "#{fetch(:default_env)[:rvm_bin_path]}/rvm ruby-#{fetch(:rvm_ruby_version)} do bundle exec rake"
+#SSHKit.config.command_map[:rake] = "#{fetch(:default_env)[:rvm_bin_path]}/rvm ruby-#{fetch(:rvm_ruby_version)} bundle exec rake assets:precompile"
 
 # ssh_options[:forward_agent] = true
 # ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_rsa")]
